@@ -1,6 +1,6 @@
 <div align="center">
 
-# ML1 | Logistic Regression Analysis & Optimization
+# ML1 | AdaBoost Classifier Analysis & Optimization
 </div>
 
 <p align="center" width="100%">
