@@ -34,7 +34,7 @@ def update_weights(w_i, alpha, y, y_pred):
     return w_i * np.exp(alpha * (np.not_equal(y, y_pred)).astype(int))
 
 __version__ = "2.0.1"
-classes_ = "myclass"
+
 # Define AdaBoost class
 class AdaBoost(BaseEstimator, ClassifierMixin):
     
@@ -84,6 +84,7 @@ class AdaBoost(BaseEstimator, ClassifierMixin):
             self.alphas.append(alpha_m)
 
         assert len(self.G_M) == len(self.alphas)
+        self.classes_ = np.unique(y)
 
     def predict(self, X):
         '''
