@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
 from sklearn.base import BaseEstimator, ClassifierMixin
+from sklearn.preprocessing import LabelEncoder
 from sklearn.tree import DecisionTreeClassifier
 
 # Compute error rate, alpha and w
@@ -59,7 +60,7 @@ class AdaBoost(BaseEstimator, ClassifierMixin):
         self.M = M
 
         # Iterate over M weak classifiers
-        for m in range(0, M):
+        for m in range(M):
             
             # Set weights for current boosting iteration
             if m == 0:
@@ -72,7 +73,7 @@ class AdaBoost(BaseEstimator, ClassifierMixin):
             G_m = DecisionTreeClassifier(max_depth = 1)     # Stump: Two terminal-node classification tree
             G_m.fit(X, y, sample_weight = w_i)
             y_pred = G_m.predict(X)
-            
+
             self.G_M.append(G_m) # Save to list of weak classifiers
 
             # (b) Compute error
@@ -84,7 +85,8 @@ class AdaBoost(BaseEstimator, ClassifierMixin):
             self.alphas.append(alpha_m)
 
         assert len(self.G_M) == len(self.alphas)
-        self.classes_ = np.unique(y)
+        self.classes_ = np.unique(y_pred)
+        print(self.classes_)
 
     def predict(self, X):
         '''
@@ -97,6 +99,7 @@ class AdaBoost(BaseEstimator, ClassifierMixin):
 
         # Predict class label for each weak classifier, weighted by alpha_m
         for m in range(self.M):
+            # print("PREDS:", self.G_M[m].predict(X))
             y_pred_m = self.G_M[m].predict(X) * self.alphas[m]
             weak_preds.iloc[:,m] = y_pred_m
 
