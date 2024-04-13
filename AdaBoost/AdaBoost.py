@@ -86,7 +86,6 @@ class AdaBoost(BaseEstimator, ClassifierMixin):
 
         assert len(self.G_M) == len(self.alphas)
         self.classes_ = np.unique(y_pred)
-        print(self.classes_)
 
     def predict(self, X):
         '''
