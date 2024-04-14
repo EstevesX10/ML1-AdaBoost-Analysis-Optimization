@@ -15,6 +15,9 @@ This File contains multiple functions used to Visualize Data:
     -> def Plot_ROC_Curve(fit_model, X_Test, Y_Test):
         - Plots the ROC Curve
 
+    -> Plot_Error_Rates_During_Training(fitmodel):
+        - Plots the Variance of the Weak Learner's Error during Training
+
 '''
 
 def Display_Confusion_Matrix(fit_model, X_Test, y_Test, labels):    
@@ -74,4 +77,12 @@ def Plot_ROC_Curve(fit_model, X_Test, Y_Test):
     ax.axline((0, 0), slope=1, label="Chance Level (AUC = 0.5)", color="darkred", linestyle='--')
     
     plt.legend(loc=4)
+    plt.show()
+
+def Plot_Error_Rates_During_Training(fitmodel):
+    plt.figure(figsize=(10,5))
+    plt.plot(fitmodel.training_errors)
+    plt.hlines(0.5, 0, 400, colors = 'red', linestyles='dashed')
+    plt.title('Training error rates by stump')
+    plt.xlabel('Stump')
     plt.show()
