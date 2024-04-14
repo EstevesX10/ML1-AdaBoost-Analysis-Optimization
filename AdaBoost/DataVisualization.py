@@ -68,7 +68,7 @@ def Plot_ROC_Curve(fit_model, X_Test, Y_Test):
     # Plotting the Results
     plt.plot(false_positive_rate,
              true_positive_rate,
-             label=f"AUC = {AUC:1.3f}",
+             label=f"AUC = {round(AUC, 4)}",
              color="darkblue",
              linestyle='-',
              linewidth=1.4)
