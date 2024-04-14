@@ -34,6 +34,9 @@ def update_weights(w_i, alpha, y, y_pred):
     '''  
     return w_i * np.exp(alpha * (np.not_equal(y, y_pred)).astype(int))
 
+def sigmoid(x):
+    return 1 / (1 + np.exp(-x))
+
 __version__ = "2.0.1"
 
 # Define AdaBoost class
@@ -98,7 +101,6 @@ class AdaBoost(BaseEstimator, ClassifierMixin):
 
         # Predict class label for each weak classifier, weighted by alpha_m
         for m in range(self.M):
-            # print("PREDS:", self.G_M[m].predict(X))
             y_pred_m = self.G_M[m].predict(X) * self.alphas[m]
             weak_preds.iloc[:,m] = y_pred_m
 
@@ -106,3 +108,22 @@ class AdaBoost(BaseEstimator, ClassifierMixin):
         y_pred = (np.sign(weak_preds.T.sum())).astype(int)
 
         return y_pred
+
+    def predict_proba(self, X):
+        '''
+        Predict class probabilities using the fitted model.
+        X: independent variables - array-like matrix
+        '''
+
+        # Initialize dataframe with weak predictions for each observation, weighted by alpha_m
+        weighted_sums = np.zeros(len(X))
+
+        for m in range(self.M):
+            y_pred_m = self.G_M[m].predict(X)
+            weighted_sums += y_pred_m * self.alphas[m]
+
+        # Calculate probabilities using the sigmoid function
+        proba = sigmoid(weighted_sums)
+        
+        # Since the class labels are in {-1, 1}
+        return np.vstack([(1 - proba), proba]).T
