@@ -1,14 +1,23 @@
 import numpy as np
 import pandas as pd
-from sklearn.tree import DecisionTreeClassifier
+from sklearn.tree import (DecisionTreeClassifier)
+from sklearn.linear_model import (Perceptron)
 from AdaBoost import (AdaBoost)
 
+'''
+    # ---------------------- #
+    | Modified AdaBoost File |
+    # ---------------------- #
+
+This File contains a Modified Version of the AdaBoost Algorithm
+
+'''
+
 class ModifiedAdaboost(AdaBoost):
-    
     def __init__(self):
-        super.__init__()
-        self.weak_learner = DecisionTreeClassifier
-        self.weak_learner_specs = {'max_depth':1}
+        super().__init__()
+        self.weak_learner = Perceptron
+        self.weak_learner_specs = {}
 
     def fit(self, X, y, M = 100):
         return super().fit(X, y, M)
@@ -18,3 +27,6 @@ class ModifiedAdaboost(AdaBoost):
 
     def predict_proba(self, X):
         return super().predict_proba()
+    
+if __name__ == "__main__":
+    d = {'max_depth':1}
