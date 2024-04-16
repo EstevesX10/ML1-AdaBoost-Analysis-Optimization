@@ -13,7 +13,7 @@ This File contains a Modified Version of the AdaBoost Algorithm
 
 '''
 
-class ModifiedAdaboost(AdaBoost):
+class ModifiedAdaBoost(AdaBoost):
     def __init__(self):
         super().__init__()
         self.weak_learner = Perceptron
