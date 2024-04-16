@@ -1,7 +1,6 @@
 import numpy as np
 import pandas as pd
 from sklearn.base import BaseEstimator, ClassifierMixin
-from sklearn.preprocessing import LabelEncoder
 from sklearn.tree import DecisionTreeClassifier
 
 # Compute error rate, alpha and w
@@ -42,10 +41,10 @@ __version__ = "2.0.1"
 # Define AdaBoost class
 class AdaBoost(BaseEstimator, ClassifierMixin):
 
-    def __init__(self, Model=DecisionTreeClassifier, params={'max_depth':1}):
+    def __init__(self):
         self.alphas = []
-        self.weak_learner = Model
-        self.weak_learner_specs = params
+        self.weak_learner = DecisionTreeClassifier
+        self.weak_learner_specs = {'max_depth':1}
         self.G_M = []
         self.M = None
         self.training_errors = []
