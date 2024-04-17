@@ -3,6 +3,16 @@ import pandas as pd
 from sklearn.base import BaseEstimator, ClassifierMixin
 from sklearn.tree import DecisionTreeClassifier
 
+'''
+    # ------------------ #
+    | Base AdaBoost File |
+    # ------------------ #
+
+This File contains the Base AdaBoost Algorithm used for Binary Classification Problems
+as well as some functions to compute values along the training and testing of the model 
+
+'''
+
 # Compute error rate, alpha and w
 def compute_error(y, y_pred, w_i):
     '''
