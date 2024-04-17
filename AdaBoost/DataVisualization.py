@@ -1,3 +1,4 @@
+import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.metrics import (confusion_matrix, ConfusionMatrixDisplay, roc_curve, roc_auc_score)
@@ -20,9 +21,9 @@ This File contains multiple functions used to Visualize Data:
 
 '''
 
-def Display_Confusion_Matrix(fit_model, X_Test, y_Test, labels):    
+def Display_Confusion_Matrix(FitModel, X_Test, y_Test, labels):    
     # Creating a Confusion Matrix
-    cm = confusion_matrix(y_Test, fit_model.predict(X_Test))
+    cm = confusion_matrix(y_Test, FitModel.predict(X_Test))
     
     # Adds an Axes to the current figure 
     # [Check Matplotlib Documentation at: https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.subplot.html]
@@ -45,9 +46,9 @@ def Display_Confusion_Matrix(fit_model, X_Test, y_Test, labels):
     # Showing Final Product
     plt.show()
 
-def Plot_ROC_Curve(fit_model, X_Test, Y_Test):
+def Plot_ROC_Curve(FitModel, X_Test, Y_Test):
     # Predict Probability of belonging to a certain class
-    Y_Pred_Proba = fit_model.predict_proba(X_Test)[::,1]
+    Y_Pred_Proba = FitModel.predict_proba(X_Test)[::,1]
     
     # Getting the ROC Curve
     false_positive_rate, true_positive_rate, _ = roc_curve(Y_Test, Y_Pred_Proba)
@@ -79,10 +80,28 @@ def Plot_ROC_Curve(fit_model, X_Test, Y_Test):
     plt.legend(loc=4)
     plt.show()
 
-def Plot_Error_Rates_During_Training(fitmodel):
-    plt.figure(figsize=(10,5))
-    plt.plot(fitmodel.training_errors)
-    plt.hlines(0.5, 0, 400, colors = 'red', linestyles='dashed')
-    plt.title('Training error rates by stump')
-    plt.xlabel('Stump')
-    plt.show()
+def Plot_Weak_Learners_Stats(FitModel):
+    '''
+    Plots The Weak Learner's Training Error and Weights over N Boosting Rounds
+    FitModel: Trained AdaBoost Classifier 
+    '''
+    
+    weak_learners_info = pd.DataFrame(
+        {
+            "Number of Weak Learners": range(1, len(FitModel.alphas) + 1),
+            "Errors": FitModel.training_errors,
+            "Weights": FitModel.alphas,
+        }
+    ).set_index("Number of Weak Learners")
+    
+    axs = weak_learners_info.plot(
+        subplots=True, layout=(1, 2), figsize=(10, 4), legend=False, color="tab:blue"
+    )
+    axs[0, 0].set_ylabel("Train error")
+    axs[0, 0].set_title("Weak learner's training error")
+    axs[0, 0].hlines(0.5, 0, 400, colors = '#bd162c', linestyles='dashed')
+    axs[0, 1].set_ylabel("Weight")
+    axs[0, 1].set_title("Weak learner's weight")
+    fig = axs[0, 0].get_figure()
+    fig.suptitle("Weak learner's Errors and Weights for the AdaBoostClassifier")
+    fig.tight_layout()
