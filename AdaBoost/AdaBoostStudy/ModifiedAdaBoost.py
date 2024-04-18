@@ -1,4 +1,4 @@
-from sklearn.linear_model import (Perceptron)
+from sklearn.linear_model import (Perceptron, LogisticRegression)
 from .AdaBoost import (AdaBoost)
 
 '''
@@ -24,6 +24,20 @@ class AdaBoostPerceptron(AdaBoost):
 
     def predict_proba(self, X):
         return super().predict_proba(X)
-    
-if __name__ == "__main__":
-    d = {'max_depth':1}
+
+
+''' MAYBE REMOVE '''
+class AdaBoostLogisticRegression(AdaBoost):
+    def __init__(self):
+        super().__init__()
+        self.weak_learner = LogisticRegression
+        self.weak_learner_specs = {}
+
+    def fit(self, X, y, M = 100):
+        return super().fit(X, y, M)
+
+    def predict(self, X):
+        return super().predict(X)
+
+    def predict_proba(self, X):
+        return super().predict_proba(X)
