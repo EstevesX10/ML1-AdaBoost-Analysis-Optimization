@@ -1,4 +1,4 @@
-Dataset,AdaBoost,AdaBoost [Perceptrons],Sklearns AdaBoost
+Dataset,AdaBoost [Base],AdaBoost [Perceptrons],AdaBoost [Sklearns]
 kr-vs-kp,0.9524349569640063,0.961825117370892,0.964325117370892
 breast-w,0.9604765993988836,0.958995276942894,0.9560863031343925
 credit-approval,0.8621491485613623,0.6891015854374634,0.8498766881972987
