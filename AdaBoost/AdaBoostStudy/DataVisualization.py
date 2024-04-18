@@ -21,7 +21,16 @@ This File contains multiple functions used to Visualize Data:
 
 '''
 
-def Display_Confusion_Matrix(FitModel, X_Test, y_Test, labels):    
+def Display_Confusion_Matrix(FitModel, X_Test, y_Test, labels):
+
+    '''
+    Displays the Model's Confusion Matrix:
+    FitModel := Trained AdaBoost Classifier 
+    X_Test := Array with the Feature's Test set  
+    Y_Test := Array with the Label's Test set
+    labels := labels used in the X and Y axis description
+    '''
+
     # Creating a Confusion Matrix
     cm = confusion_matrix(y_Test, FitModel.predict(X_Test))
     
@@ -47,6 +56,14 @@ def Display_Confusion_Matrix(FitModel, X_Test, y_Test, labels):
     plt.show()
 
 def Plot_ROC_Curve(FitModel, X_Test, Y_Test):
+
+    '''
+    Plots the Model's ROC Curve:
+    FitModel := Trained AdaBoost Classifier 
+    X_Test := Array with the Feature's Test set  
+    Y_Test := Array with the Label's Test set
+    '''
+
     # Predict Probability of belonging to a certain class
     Y_Pred_Proba = FitModel.predict_proba(X_Test)[::,1]
     
@@ -81,13 +98,13 @@ def Plot_ROC_Curve(FitModel, X_Test, Y_Test):
     plt.show()
 
 def Plot_Weak_Learners_Stats(FitModel):
+
     '''
     Plots The Weak Learner's Training Error and Weights over N Boosting Rounds
-    FitModel: Trained AdaBoost Classifier 
+    FitModel := Trained AdaBoost Classifier 
     '''
-    
-    weak_learners_info = pd.DataFrame(
-        {
+
+    weak_learners_info = pd.DataFrame({
             "Number of Weak Learners": range(1, len(FitModel.alphas) + 1),
             "Errors": FitModel.training_errors,
             "Weights": FitModel.alphas,
@@ -102,6 +119,60 @@ def Plot_Weak_Learners_Stats(FitModel):
     axs[0, 0].hlines(0.5, 0, 400, colors = '#bd162c', linestyles='dashed')
     axs[0, 1].set_ylabel("Weight")
     axs[0, 1].set_title("Weak learner's weight")
+
     fig = axs[0, 0].get_figure()
     fig.suptitle("Weak learner's Errors and Weights for the AdaBoostClassifier")
     fig.tight_layout()
+
+def Plot_Model_Stats(FitModel, X_Test, Y_Test):
+
+    '''
+    Plots The Model's weak learner's Training Error and Weights over N Boosting Rounds as well as the ROC Curve
+    FitModel := Trained AdaBoost Classifier 
+    X_Test := Array with the Feature's Test set  
+    Y_Test := Array with the Label's Test set
+    '''
+
+    # Predict Probability of belonging to a certain class
+    Y_Pred_Proba = FitModel.predict_proba(X_Test)[:,1]
+
+    # Getting the ROC Curve
+    false_positive_rate, true_positive_rate, _ = roc_curve(Y_Test, Y_Pred_Proba)
+
+    # Calculating the Area Under Curve
+    AUC = roc_auc_score(Y_Test, Y_Pred_Proba)
+
+    # Prepare DataFrame for the weak learners' statistics
+    weak_learners_info = pd.DataFrame({
+            "Errors": FitModel.training_errors,
+            "Weights": FitModel.alphas,
+        },
+        index=range(1, len(FitModel.alphas) + 1)
+    )
+
+    # Create a larger figure to accommodate the plots
+    fig, axs = plt.subplots(1, 3, figsize=(15, 5))  # adjust the figure size as needed
+
+    # Plot training errors and weights
+    weak_learners_info['Errors'].plot(ax=axs[0], title="Weak learner's training error", color="tab:blue")
+    axs[0].set_xlabel("Number of Weak Learners")
+    axs[0].set_ylabel("Train error")
+    axs[0].hlines(0.5, 1, len(FitModel.alphas), colors='#bd162c', linestyles='dashed')
+
+    weak_learners_info['Weights'].plot(ax=axs[1], title="Weak learner's weight", color="tab:blue")
+    axs[1].set_xlabel("Number of Weak Learners")
+    axs[1].set_ylabel("Weight")
+
+    # Plot ROC Curve
+    axs[2].plot(false_positive_rate, true_positive_rate, label=f"AUC = {round(AUC, 4)}", color="darkblue", linestyle='-', linewidth=1.4)
+    axs[2].plot([0, 1], [0, 1], label="Chance level (AUC = 0.5)", color="darkred", linestyle='--')
+    axs[2].set_title('ROC Curve')
+    axs[2].set_xlabel('False Positive Rate')
+    axs[2].set_ylabel('True Positive Rate')
+    axs[2].legend()
+
+    # Set the super title for all subplots
+    fig.suptitle("Weak learner's Errors, Weights, and ROC Curve for the AdaBoostClassifier")
+
+    plt.tight_layout()
+    plt.show()
