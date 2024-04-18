@@ -10,7 +10,7 @@ This File contains a Modified Version of the AdaBoost Algorithm
 
 '''
 
-class ModifiedAdaBoost(AdaBoost):
+class AdaBoostPerceptron(AdaBoost):
     def __init__(self):
         super().__init__()
         self.weak_learner = Perceptron
@@ -23,7 +23,7 @@ class ModifiedAdaBoost(AdaBoost):
         return super().predict(X)
 
     def predict_proba(self, X):
-        return super().predict_proba()
+        return super().predict_proba(X)
     
 if __name__ == "__main__":
     d = {'max_depth':1}
