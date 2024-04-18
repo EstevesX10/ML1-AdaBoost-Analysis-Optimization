@@ -18,6 +18,9 @@ This File contains multiple functions used to Visualize Data:
 
     -> Plot_Weak_Learners_Stats(FitModel):
         - Plots Statistics regarding the Variance of the Weak Learner's Error during Training as well as their weights throughout training
+    
+    -> Compare_Models_Stats(FitModels, ModelsNames, X_test, y_test):
+        - Plots Statiscal Data (Error in Training, Weights and ROC Curve) for a list of given Trained Models - Allow for parallel comparison
 
 '''
 
@@ -116,9 +119,12 @@ def Plot_Weak_Learners_Stats(FitModel):
     )
     axs[0, 0].set_ylabel("Train error")
     axs[0, 0].set_title("Weak learner's training error")
-    axs[0, 0].hlines(0.5, 0, 400, colors = '#bd162c', linestyles='dashed')
+    axs[0, 0].hlines(0.5, 0, 400, colors = '#bd162c', linestyles='dashed', label='Random Guessing (0.5)')
+    axs[0, 0].legend()
+    
     axs[0, 1].set_ylabel("Weight")
     axs[0, 1].set_title("Weak learner's weight")
+    axs[0, 1].legend()
 
     fig = axs[0, 0].get_figure()
     fig.suptitle("Weak learner's Errors and Weights for the AdaBoostClassifier")
@@ -151,17 +157,19 @@ def Plot_Model_Stats(FitModel, X_Test, Y_Test):
     )
 
     # Create a larger figure to accommodate the plots
-    fig, axs = plt.subplots(1, 3, figsize=(15, 5))  # adjust the figure size as needed
+    fig, axs = plt.subplots(1, 3, figsize=(12, 4))  # adjust the figure size as needed
 
     # Plot training errors and weights
     weak_learners_info['Errors'].plot(ax=axs[0], title="Weak learner's training error", color="tab:blue")
     axs[0].set_xlabel("Number of Weak Learners")
     axs[0].set_ylabel("Train error")
-    axs[0].hlines(0.5, 1, len(FitModel.alphas), colors='#bd162c', linestyles='dashed')
+    axs[0].hlines(0.5, 1, len(FitModel.alphas), colors='#bd162c', linestyles='dashed', label='Random Guessing (0.5)')
+    axs[0].legend()
 
     weak_learners_info['Weights'].plot(ax=axs[1], title="Weak learner's weight", color="tab:blue")
     axs[1].set_xlabel("Number of Weak Learners")
     axs[1].set_ylabel("Weight")
+    axs[1].legend()
 
     # Plot ROC Curve
     axs[2].plot(false_positive_rate, true_positive_rate, label=f"AUC = {round(AUC, 4)}", color="darkblue", linestyle='-', linewidth=1.4)
@@ -174,5 +182,61 @@ def Plot_Model_Stats(FitModel, X_Test, Y_Test):
     # Set the super title for all subplots
     fig.suptitle("Weak learner's Errors, Weights, and ROC Curve for the AdaBoostClassifier")
 
+    plt.tight_layout()
+    plt.show()
+
+
+def Compare_Models_Stats(FitModels, ModelsNames, X_test, y_test):
+
+    '''
+    Plots The Model's weak learner's Training Error and Weights over N Boosting Rounds as well as the ROC Curve
+    FitModels := List with Trained AdaBoost Classifiers
+    ModelsNames := List with the names of the Classifiers
+    X_test := Array with the Feature's Test set  
+    y_test := Array with the Label's Test set
+    '''
+
+    # Create the figure and axes
+    fig, axes = plt.subplots(nrows=len(FitModels), ncols=3, figsize=(12, 4*len(FitModels)))
+    
+    for idx, model in enumerate(FitModels):
+        # Get Probability of belonging to a certain class
+        Y_Pred_Proba = model.predict_proba(X_test)[:,1]
+    
+        # Get the ROC Curve
+        false_positive_rate, true_positive_rate, _ = roc_curve(y_test, Y_Pred_Proba)
+    
+        # Calculate the AUC
+        AUC = roc_auc_score(y_test, Y_Pred_Proba)
+    
+        # Create DataFrame for the weak learners' statistics
+        weak_learners_info = pd.DataFrame({
+            "Errors": model.training_errors,
+            "Weights": model.alphas,
+        }, index=range(1, len(model.alphas) + 1))
+    
+        # Plot training errors
+        weak_learners_info['Errors'].plot(ax=axes[idx, 0], title=f"{ModelsNames[idx]} Training Errors", color="tab:blue")
+        axes[idx, 0].set_xlabel("Number of Weak Learners")
+        axes[idx, 0].set_ylabel("Training Error")
+        axes[idx, 0].hlines(0.5, 1, len(model.alphas), colors='#bd162c', linestyles='dashed', label='Random Guessing (0.5)')
+        axes[idx, 0].legend()
+    
+        # Plot weights
+        weak_learners_info['Weights'].plot(ax=axes[idx, 1], title=f"{ModelsNames[idx]} Weights", color="tab:blue")
+        axes[idx, 1].set_xlabel("Number of Weak Learners")
+        axes[idx, 1].set_ylabel("Weights")
+        axes[idx, 1].legend()
+    
+        # Plot ROC Curve
+        axes[idx, 2].plot(false_positive_rate, true_positive_rate, label=f"AUC = {round(AUC, 4)}", color="darkblue", linestyle='-', linewidth=1.4)
+        axes[idx, 2].plot([0, 1], [0, 1], color="darkred", linestyle='--')
+        axes[idx, 2].axline((0, 0), slope=1, label="Chance Level (AUC = 0.5)", color="darkred", linestyle='--')
+        axes[idx, 2].set_title(f'{ModelsNames[idx]} ROC Curve')
+        axes[idx, 2].set_xlabel('False Positive Rate')
+        axes[idx, 2].set_ylabel('True Positive Rate')
+        axes[idx, 2].legend()
+    
+    # Adjust layout
     plt.tight_layout()
     plt.show()
