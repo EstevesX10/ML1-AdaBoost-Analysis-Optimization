@@ -18,54 +18,21 @@ This File contains multiple functions used to Visualize Data:
     -> Display_Confusion_Matrix(fit_model, X_Test, y_Test, labels):
         - Displays a Confusion Matrix of a given Model
     
-    -> def Plot_ROC_Curve(fit_model, X_Test, Y_Test):
+    -> Plot_ROC_Curve(fit_model, X_Test, Y_Test):
         - Plots the ROC Curve
 
     -> Plot_Weak_Learners_Stats(FitModel):
         - Plots Statistics regarding the Variance of the Weak Learner's Error during Training as well as their weights throughout training
-    
+
+    -> Plot_Model_Stats(FitModel, X_Test, Y_Test):
+        - Plots The Model's weak learner's Training Error and Weights over N Boosting Rounds as well as the ROC Curve and the Confusion Matrix
+
     -> Compare_Models_Stats(FitModels, ModelsNames, X_test, y_test):
         - Plots Statiscal Data (Error in Training, Weights and ROC Curve) for a list of given Trained Models - Allow for parallel comparison
 
+    -> Model_Accuracies_Per_Dataset(results, model_name):
+        - Plots a Barplot with the Model's Accuracies per Dataset previously calculated - Inside Results
 '''
-
-def Compare_Models_Accuracies(X, y, Models, ModelsNames, Colors):
-
-    '''
-    Plots how the Accuracies of the provided Models evolve during K-Fold Cross Validation.
-    X := Features Array
-    y := Target Array
-    Models := List with all the Models to analyse
-    ModelsNames := List with the Models Names
-    Colors := Colors to use in plotting
-    '''
-
-    # Verify the varibles sizes
-    assert(len(Models) == len(ModelsNames) and len(ModelsNames) == len(Colors))
-
-    # Create a figure to plot into
-    plt.figure()
-
-    for idx, model in enumerate(Models):
-        # Calculate Model's Accuracies
-        Accuracies, _ = Perform_KFold_CV(X, y, model, 20)
-    
-        # Plot each model's accuracies
-        plt.plot(Accuracies, label=ModelsNames[idx], marker='o', linestyle='-', color=Colors[idx])
-
-    plt.xticks(range(len(Accuracies)), range(1, len(Accuracies) + 1))
-    
-    # Add labels and title
-    plt.xlabel('Number of Folds')
-    plt.ylabel('Accuracy')
-    plt.title('Models Accuracies')
-    
-    # Add a legend
-    plt.legend()
-    
-    # Show the plot
-    plt.grid(True)
-    plt.show()
 
 def Display_Confusion_Matrix(FitModel, X_Test, y_Test, labels):
 
@@ -241,7 +208,6 @@ def Plot_Model_Stats(FitModel, X_Test, Y_Test):
     plt.tight_layout()
     plt.show()
 
-
 def Compare_Models_Stats(FitModels, ModelsNames, X_test, y_test):
 
     '''
@@ -312,5 +278,70 @@ def Compare_Models_Stats(FitModels, ModelsNames, X_test, y_test):
     fig.suptitle("Model's Performance Evaluation")
 
     # Adjust layout
+    plt.tight_layout()
+    plt.show()
+
+def Compare_Models_Accuracies(X, y, Models, ModelsNames, Colors):
+
+    '''
+    Plots how the Accuracies of the provided Models evolve during K-Fold Cross Validation.
+    X := Features Array
+    y := Target Array
+    Models := List with all the Models to analyse
+    ModelsNames := List with the Models Names
+    Colors := Colors to use in plotting
+    '''
+
+    # Verify the varibles sizes
+    assert(len(Models) == len(ModelsNames) and len(ModelsNames) == len(Colors))
+
+    # Create a figure to plot into
+    plt.figure()
+
+    for idx, model in enumerate(Models):
+        # Calculate Model's Accuracies
+        Accuracies, _ = Perform_KFold_CV(X, y, model, 20)
+    
+        # Plot each model's accuracies
+        plt.plot(Accuracies, label=ModelsNames[idx], marker='o', linestyle='-', color=Colors[idx])
+
+    plt.xticks(range(len(Accuracies)), range(1, len(Accuracies) + 1))
+    
+    # Add labels and title
+    plt.xlabel('Number of Folds')
+    plt.ylabel('Accuracy')
+    plt.title('Models Accuracies')
+    
+    # Add a legend
+    plt.legend()
+    
+    # Show the plot
+    plt.grid(True)
+    plt.show()
+
+def Model_Accuracies_Per_Dataset(results, model_name):
+
+    '''
+    Plots a Barplot with the Model's Accuracies per Dataset previously calculated - Inside Results
+    results := dataframe with the accuracies obtained by the model
+    model_name := model's name which must coincide with the respective column in the dataframe
+    '''
+
+    # Confirm that the column exists
+    assert(model_name in results.columns)
+
+    # Asserting the data
+    datasets = results['Dataset']
+    accuracies = results[model_name]
+
+    # Create the main canvas
+    plt.figure(figsize=(12, 8))
+    bar_height = 0.4
+
+    # Create the Barplot
+    plt.barh(datasets, accuracies, height=bar_height, color='skyblue')
+    plt.xlabel('Accuracy')
+    plt.title(f'{model_name} Accuracy per Dataset')
+    plt.grid(axis='x', linestyle='--', alpha=0.6)
     plt.tight_layout()
     plt.show()
