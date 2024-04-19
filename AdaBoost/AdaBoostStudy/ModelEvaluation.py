@@ -65,7 +65,6 @@ def Evaluate_Model_AllDS(tasks, model):
         Evaluate_Model(task_id, model)
         print()
 
-
 def Evaluate_Models(tasks, models, columns):
     # Create List to store the obtained results 
     data = []
