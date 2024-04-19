@@ -3,6 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.metrics import (confusion_matrix, ConfusionMatrixDisplay, roc_curve, roc_auc_score)
+from .ModelEvaluation import (Perform_KFold_CV)
 
 '''
     # ----------------------- #
@@ -10,6 +11,9 @@ from sklearn.metrics import (confusion_matrix, ConfusionMatrixDisplay, roc_curve
     # ----------------------- #
 
 This File contains multiple functions used to Visualize Data:
+
+    -> Compare_Models_Accuracies(X, y, Models, ModelsNames, Colors):
+        - Plots the Accuracies of given Models throughout K-Fold Cross Validation
 
     -> Display_Confusion_Matrix(fit_model, X_Test, y_Test, labels):
         - Displays a Confusion Matrix of a given Model
@@ -25,10 +29,48 @@ This File contains multiple functions used to Visualize Data:
 
 '''
 
+def Compare_Models_Accuracies(X, y, Models, ModelsNames, Colors):
+
+    '''
+    Plots how the Accuracies of the provided Models evolve during K-Fold Cross Validation.
+    X := Features Array
+    y := Target Array
+    Models := List with all the Models to analyse
+    ModelsNames := List with the Models Names
+    Colors := Colors to use in plotting
+    '''
+
+    # Verify the varibles sizes
+    assert(len(Models) == len(ModelsNames) and len(ModelsNames) == len(Colors))
+
+    # Create a figure to plot into
+    plt.figure()
+
+    for idx, model in enumerate(Models):
+        # Calculate Model's Accuracies
+        Accuracies, _ = Perform_KFold_CV(X, y, model, 20)
+    
+        # Plot each model's accuracies
+        plt.plot(Accuracies, label=ModelsNames[idx], marker='o', linestyle='-', color=Colors[idx])
+
+    plt.xticks(range(len(Accuracies)), range(1, len(Accuracies) + 1))
+    
+    # Add labels and title
+    plt.xlabel('Number of Folds')
+    plt.ylabel('Accuracy')
+    plt.title('Models Accuracies')
+    
+    # Add a legend
+    plt.legend()
+    
+    # Show the plot
+    plt.grid(True)
+    plt.show()
+
 def Display_Confusion_Matrix(FitModel, X_Test, y_Test, labels):
 
     '''
-    Displays the Model's Confusion Matrix:
+    Displays the Model's Confusion Matrix.
     FitModel := Trained AdaBoost Classifier 
     X_Test := Array with the Feature's Test set  
     Y_Test := Array with the Label's Test set
