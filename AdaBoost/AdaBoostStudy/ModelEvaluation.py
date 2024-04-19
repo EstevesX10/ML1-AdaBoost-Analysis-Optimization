@@ -28,9 +28,9 @@ This File contains multiple functions used to Evaluate the Machine Learning Mode
 
 '''
 
-def Perform_KFold_CV(X, y, model):
+def Perform_KFold_CV(X, y, model, total_splits=5):
     # Set the K-Fold cross-validation
-    kf = KFold(n_splits=5, shuffle=True, random_state=123)
+    kf = KFold(n_splits=total_splits, shuffle=True, random_state=123)
     
     # Perform K-Fold cross-validation
     scores = cross_val_score(model, X, y, cv=kf, scoring='accuracy')
