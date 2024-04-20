@@ -140,7 +140,7 @@ def Plot_Weak_Learners_Stats(FitModel):
     fig.suptitle("AdaBoostClassifier [Performance Analysis]")
     fig.tight_layout()
 
-def Plot_Model_Stats(FitModel, X_Test, Y_Test):
+def Plot_Model_Stats(FitModel, X_Test, Y_Test, Title="Model Performance Evaluation"):
 
     '''
     Plots The Model's weak learner's Training Error and Weights over N Boosting Rounds as well as the ROC Curve and the Confusion Matrix
@@ -203,7 +203,7 @@ def Plot_Model_Stats(FitModel, X_Test, Y_Test):
     axs[3].legend()
 
     # Set the super title for all subplots
-    fig.suptitle("Model Performance Evaluation")
+    fig.suptitle(Title)
 
     plt.tight_layout()
     plt.show()
