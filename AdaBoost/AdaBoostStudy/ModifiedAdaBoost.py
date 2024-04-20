@@ -13,9 +13,7 @@ This File contains a Modified Version of the AdaBoost Algorithm
 
 class AdaBoostPerceptron(AdaBoost):
     def __init__(self):
-        super().__init__()
-        self.weak_learner = Perceptron
-        self.weak_learner_specs = {}
+        super().__init__(weak_learner=Perceptron, weak_learner_hyperparameters={})
 
     def fit(self, X, y, M = 100):
         return super().fit(X, y, M)
@@ -27,10 +25,8 @@ class AdaBoostPerceptron(AdaBoost):
         return super().predict_proba(X)
 
 class AdaBoostTunedDT(AdaBoost):
-    def __init__(self, hyperparameters):
-        super().__init__()
-        self.weak_learner = DecisionTreeClassifier
-        self.weak_learner_specs = hyperparameters
+    def __init__(self, weak_learner_hyperparameters):
+        super().__init__(weak_learner_hyperparameters=weak_learner_hyperparameters)
 
     def fit(self, X, y, M = 100):
         return super().fit(X, y, M)
