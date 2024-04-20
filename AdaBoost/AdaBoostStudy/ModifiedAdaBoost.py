@@ -25,8 +25,8 @@ class AdaBoostPerceptron(AdaBoost):
         return super().predict_proba(X)
 
 class AdaBoostTunedDT(AdaBoost):
-    def __init__(self, weak_learner_hyperparameters):
-        super().__init__(weak_learner_hyperparameters=weak_learner_hyperparameters)
+    def __init__(self, weak_learner_hyperparameters={'max_depth':1}):
+        super().__init__(weak_learner=DecisionTreeClassifier, weak_learner_hyperparameters=weak_learner_hyperparameters)
 
     def fit(self, X, y, M = 100):
         return super().fit(X, y, M)
