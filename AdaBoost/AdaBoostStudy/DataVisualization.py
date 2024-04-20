@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.metrics import (confusion_matrix, ConfusionMatrixDisplay, roc_curve, roc_auc_score)
 from .ModelEvaluation import (Perform_KFold_CV)
+import scikit_posthocs as sp
 
 '''
     # ----------------------- #
@@ -32,6 +33,9 @@ This File contains multiple functions used to Visualize Data:
 
     -> Model_Accuracies_Per_Dataset(results, model_name):
         - Plots a Barplot with the Model's Accuracies per Dataset previously calculated - Inside Results
+    
+    -> Plot_Critial_Difference_Diagram(Matrix, Colors):
+        - Plots the Critical Difference Diagram
 '''
 
 def Display_Confusion_Matrix(FitModel, X_Test, y_Test, labels):
@@ -345,3 +349,25 @@ def Model_Accuracies_Per_Dataset(results, model_name):
     plt.grid(axis='x', linestyle='--', alpha=0.6)
     plt.tight_layout()
     plt.show()
+
+def Plot_Critial_Difference_Diagram(Matrix, Colors):
+
+    '''
+    Plots the Critical Difference Diagram.
+    Matrix := Dataframe with the Accuracies obtained by the Models
+    Colors := Dictionary that matches each column of the df to a color to use in the Diagram
+    '''
+    
+    # Calculate ranks
+    ranks = Matrix.rank(axis=1, ascending=False).mean()
+    
+    # Perform Nemenyi post-hoc test
+    nemenyi = sp.posthoc_nemenyi_friedman(Matrix)
+    # print(nemenyi)
+
+    # Add Some Styling
+    marker = {'marker':'o', 'linewidth':1}
+    label_props = {'backgroundcolor':'#ADD5F7', 'verticalalignment':'top'}
+    
+    # Plot the Critical Difference Diagram
+    _ = sp.critical_difference_diagram(ranks, nemenyi, color_palette=Colors, marker_props=marker, label_props=label_props)
