@@ -52,17 +52,16 @@ class AdaBoost(BaseEstimator, ClassifierMixin):
         error: error rate from weak classifier m
         '''
         
-        # Exponential Loss
-        if self.loss_function == 'exponential':
-            return np.log((1 - error) / error)
-        
-        # Logistic Loss and Hinge Loss
-        elif self.loss_function == 'logistic':
+        # Exponential Loss and Logistic Loss
+        if self.loss_function == 'exponential' or self.loss_function == 'logistic':
             return 0.5 * np.log((1 - error) / error)
         
-        # Squared Loss
+        # Squared Loss and Hinge Loss
         elif self.loss_function == 'hinge' or self.loss_function == 'squared':
             return self.learning_rate * (1 - error)
+
+        else:
+            raise ValueError("Unsupported Loss Function!")
 
     def update_weights(self, w_i, alpha, y_true, y_pred):
         ''' 
