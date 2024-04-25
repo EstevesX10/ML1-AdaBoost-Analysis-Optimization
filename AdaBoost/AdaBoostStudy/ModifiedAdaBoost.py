@@ -8,7 +8,10 @@ from .AdaBoost import (AdaBoost)
     | Modified AdaBoost File |
     # ---------------------- #
 
-This File contains a Modified Version of the AdaBoost Algorithm
+This File contains Modified Versions of the AdaBoost Algorithm based on:
+
+    -> Weak Learner Choice
+    -> Loss Functions used in training
 
 '''
 
@@ -38,22 +41,37 @@ class AdaBoostTunedDT(AdaBoost):
     def predict_proba(self, X):
         return super().predict_proba(X)
 
-'''
--------------------------------------------------------
-'''
+# -------------------------------------------------------
 
 class AdaBoost_LogisticLoss(AdaBoost):
     def __init__(self):
         super().__init__(loss_function = 'logistic')
 
-    def compute_error(self, y_true, y_pred, w_i):
-        return super().compute_error(y_true, y_pred, w_i)
+    def fit(self, X, y, M = 100):
+        return super().fit(X, y, M)
 
-    def compute_alpha(self, error):
-        return super().compute_alpha(error)
+    def predict(self, X):
+        return super().predict(X)
 
-    def update_weights(self, w_i, alpha, y_true, y_pred):
-        return super().update_weights(w_i, alpha, y_true, y_pred)
+    def predict_proba(self, X):
+        return super().predict_proba(X)
+
+class AdaBoost_HingeLoss(AdaBoost):
+    def __init__(self):
+        super().__init__(loss_function = 'hinge')
+
+    def fit(self, X, y, M = 100):
+        return super().fit(X, y, M)
+
+    def predict(self, X):
+        return super().predict(X)
+
+    def predict_proba(self, X):
+        return super().predict_proba(X)
+
+class AdaBoost_SquaredLoss(AdaBoost):
+    def __init__(self):
+        super().__init__(loss_function = 'squared')
 
     def fit(self, X, y, M = 100):
         return super().fit(X, y, M)
