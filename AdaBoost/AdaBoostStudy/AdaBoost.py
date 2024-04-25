@@ -57,12 +57,12 @@ class AdaBoost(BaseEstimator, ClassifierMixin):
             return np.log((1 - error) / error)
         
         # Logistic Loss and Hinge Loss
-        elif self.loss_function == 'logistic' or self.loss_function == 'hinge':
+        elif self.loss_function == 'logistic':
             return 0.5 * np.log((1 - error) / error)
         
         # Squared Loss
-        elif self.loss_function == 'squared':
-            return self.learning_rate
+        elif self.loss_function == 'hinge' or self.loss_function == 'squared':
+            return self.learning_rate * (1 - error)
 
     def update_weights(self, w_i, alpha, y_true, y_pred):
         ''' 
@@ -72,14 +72,14 @@ class AdaBoost(BaseEstimator, ClassifierMixin):
         y_pred: predicted value by weak classifier  
         alpha: weight of weak classifier used to estimate y_pred
         '''
-
+        
         # Default Exponential Loss
         if self.loss_function == 'exponential':  
             w_i *= np.exp(alpha * (np.not_equal(y_true, y_pred)).astype(int))
         
         # Logistic Loss
         elif self.loss_function == 'logistic':
-            w_i *= np.exp(-alpha * y_true * y_pred) / (2 - np.sum(w_i * (y_pred != y_true)))
+            w_i *= np.log(1 + np.exp(alpha * (np.not_equal(y_true, y_pred)).astype(int)))
         
         # Hinge Loss
         elif self.loss_function == 'hinge':
@@ -88,8 +88,10 @@ class AdaBoost(BaseEstimator, ClassifierMixin):
 
         # Squared Loss
         elif self.loss_function == 'squared':
-                # Update weights based on squared error
-                w_i *= np.exp(alpha * (1 - y_true * y_pred)**2)
+            w_i *= np.exp(alpha * (1 - y_true * y_pred)**2)
+        
+        else:
+            raise ValueError("Unsupported Loss Function!")
         
         # Normalize weights
         return w_i / np.sum(w_i)
@@ -101,10 +103,6 @@ class AdaBoost(BaseEstimator, ClassifierMixin):
         y: target variable - array-like vector
         M: number of boosting rounds. Default is 100 - integer
         '''
-        
-        # Making sure the Loss Function is Valid
-        if (self.loss_function not in set(['exponential', 'logistic', 'hinge', 'squared'])):
-            raise Exception('Instance of AdaBoost initialized with invalid Loss Function!')
 
         # Clear before calling
         self.alphas = []
