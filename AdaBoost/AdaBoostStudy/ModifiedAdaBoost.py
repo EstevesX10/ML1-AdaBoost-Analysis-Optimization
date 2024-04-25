@@ -44,10 +44,10 @@ class AdaBoostTunedDT(AdaBoost):
 
 class AdaBoost_LogisticLoss(AdaBoost):
     def __init__(self):
-        super().__init__(loss_function='logistic')
+        super().__init__(loss_function = 'logistic')
 
     def compute_error(self, y_true, y_pred, w_i):
-        return self.compute_error(y_true, y_pred, w_i)
+        return super().compute_error(y_true, y_pred, w_i)
 
     def compute_alpha(self, error):
         return super().compute_alpha(error)
