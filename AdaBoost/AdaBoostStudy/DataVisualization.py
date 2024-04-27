@@ -261,7 +261,7 @@ def Compare_Models_Stats(FitModels, ModelsNames, X_test, y_test):
 
         # Creating a HeatMap
         sns.heatmap(cm, annot=True, cmap='Blues', fmt='g', ax=axes[idx, 2])
-
+    
         # Plot Confusion Matrix
         axes[idx, 2].set_title(f'{ModelsNames[idx]} Confusion Matrix')
         axes[idx, 2].set_xlabel('Predicted Labels')
