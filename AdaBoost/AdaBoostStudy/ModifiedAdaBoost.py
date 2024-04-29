@@ -1,7 +1,6 @@
 import numpy as np
 from sklearn.tree import (DecisionTreeClassifier)
-from sklearn.svm import (SVC)
-from sklearn.linear_model import (Perceptron)
+from sklearn.linear_model import (Perceptron, RidgeClassifier)
 from .AdaBoost import (AdaBoost)
 
 '''
@@ -29,9 +28,9 @@ class AdaBoostTunedDT(AdaBoost):
     def predict_proba(self, X):
         return super().predict_proba(X)
 
-class AdaBoostSVM(AdaBoost):
+class AdaBoostRidgeClassifier(AdaBoost):
     def __init__(self):
-        super().__init__(weak_learner=SVC, weak_learner_hyperparameters={'kernel':'linear'})
+        super().__init__(weak_learner=RidgeClassifier, weak_learner_hyperparameters={})
 
     def fit(self, X, y, M = 100):
         return super().fit(X, y, M)
