@@ -142,6 +142,8 @@ class AdaBoost(BaseEstimator, ClassifierMixin):
         X: independent variables - array-like
         '''
 
+        assert(len(self.G_M) > 0)
+
         # Initialise dataframe with weak predictions for each observation
         weak_preds = pd.DataFrame(index = range(len(X)), columns = range(self.M)) 
 
