@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
-from sklearn.metrics import (confusion_matrix, ConfusionMatrixDisplay, roc_curve, roc_auc_score)
+from sklearn.metrics import (confusion_matrix, roc_curve, roc_auc_score)
 from .ModelEvaluation import (Perform_KFold_CV)
 import scikit_posthocs as sp
 
