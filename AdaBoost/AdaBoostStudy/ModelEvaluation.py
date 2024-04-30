@@ -33,7 +33,7 @@ def Perform_KFold_CV(X, y, model, total_splits=5):
     kf = KFold(n_splits=total_splits, shuffle=True, random_state=123)
     
     # Perform K-Fold cross-validation
-    scores = cross_val_score(model, X, y, cv=kf, scoring='accuracy')
+    scores = cross_val_score(model, X, y, cv=kf, scoring='accuracy', n_jobs=-1)
 
     # Return accuracies and respective standard deviations
     return scores, scores.std()
@@ -52,12 +52,11 @@ def Evaluate_Model(task_id, model):
     # Get Features and Target
     ds_name, X, y = Fetch_X_y(task_id)
 
-    if (len(X) > 0):
-        # Perform K-Fold Cross Validation
-        Avg_Accuracy, Avg_Std = Perform_Mean_KFold_CV(X, y, model)
-    
-        # Print Results
-        print(f"[DATASET] {ds_name}\n[Average Accuracy] {Avg_Accuracy:1.3f} +/- {Avg_Std:1.3f}")
+    # Perform K-Fold Cross Validation
+    Avg_Accuracy, Avg_Std = Perform_Mean_KFold_CV(X, y, model)
+
+    # Print Results
+    print(f"[DATASET] {ds_name}\n[Average Accuracy] {Avg_Accuracy:1.3f} +/- {Avg_Std:1.3f}")
 
 def Evaluate_Model_AllDS(tasks, model):
     # Evaluate all Datasets Retrieved
