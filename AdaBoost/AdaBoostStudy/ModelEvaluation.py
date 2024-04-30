@@ -69,12 +69,18 @@ def Evaluate_Models(tasks, models, columns):
     # Create List to store the obtained results 
     data = []
 
+    columns_names = ['Dataset', 'Positive Cases (%)', 'Negative Cases (%)', 'Majority Class (%)'] + columns
+
     for task_id in tasks.keys():
         # Get Features and Target
         ds_name, X, y = Fetch_X_y(task_id)
 
+        positive_cases = sum(y == 1) / len(y)
+        negative_cases = sum(y == -1) / len(y)
+        majority_class_cases = max(positive_cases, negative_cases)
+
         # Initialize results list for the current dataset
-        dataset_results = [ds_name]
+        dataset_results = [ds_name, positive_cases, negative_cases, majority_class_cases]
 
         for model in models:
             # Perform K-Fold Cross Validation
@@ -85,8 +91,8 @@ def Evaluate_Models(tasks, models, columns):
 
         # Update overall Results
         data.append(dataset_results)
-    
+        
     # Create a DataFrame
-    df = pd.DataFrame(data, columns=columns)
+    df = pd.DataFrame(data, columns=columns_names)
 
     return df

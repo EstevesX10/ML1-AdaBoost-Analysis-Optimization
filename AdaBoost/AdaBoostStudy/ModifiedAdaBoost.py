@@ -1,6 +1,5 @@
-import numpy as np
 from sklearn.tree import (DecisionTreeClassifier)
-from sklearn.linear_model import (Perceptron, RidgeClassifier)
+from sklearn.linear_model import (Perceptron)
 from .AdaBoost import (AdaBoost)
 
 '''
@@ -18,19 +17,6 @@ This File contains Modified Versions of the AdaBoost Algorithm based on:
 class AdaBoostTunedDT(AdaBoost):
     def __init__(self, weak_learner_hyperparameters={'max_depth':1}):
         super().__init__(weak_learner=DecisionTreeClassifier, weak_learner_hyperparameters=weak_learner_hyperparameters)
-
-    def fit(self, X, y, M = 100):
-        return super().fit(X, y, M)
-
-    def predict(self, X):
-        return super().predict(X)
-
-    def predict_proba(self, X):
-        return super().predict_proba(X)
-
-class AdaBoostRidgeClassifier(AdaBoost):
-    def __init__(self):
-        super().__init__(weak_learner=RidgeClassifier, weak_learner_hyperparameters={})
 
     def fit(self, X, y, M = 100):
         return super().fit(X, y, M)
