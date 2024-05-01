@@ -38,6 +38,34 @@ def Load_json_file(file_path:str):
     with open(file_path) as f:
         return json.load(f)
 
+def Manage_Results(results:dict):
+    '''Converts the Results saved in .json file into a list of points to futher scatterplot'''
+    
+    # [Results_Diff_1, Results_Diff_2, ...] => as many as the model's processed
+    # Results_diff => List of points (x, y) where x = n_weak_learners and y = delta accuracy
+    
+    try:
+        n_models = len(results[3].keys())
+    except:
+        n_models = len(results['3'].keys())
+    
+    Processed_Results = [[] for _ in range(n_models)]
+    Base_Accuracy = None
+    
+    for task_id, task_results in results.items():
+        for idx, (model, model_results) in enumerate(task_results.items()):
+            if (idx == 0):
+                Base_Accuracy = model_results['Model_Accuracy']
+            else:
+                Model_Accuracy = model_results['Model_Accuracy']
+                Weak_Learners_Accuracies = model_results['Weak_Learners_Accuracies']
+                Random_Guessing_Accuracy = model_results['Majority_Class']
+                Delta_Accuracy = (Model_Accuracy - Base_Accuracy)
+                N_Weak_Learners_with_less_Accuracy = (sum([Weak_Learner_Accuracy < Random_Guessing_Accuracy for Weak_Learner_Accuracy in Weak_Learners_Accuracies]))
+                Processed_Results[idx-1].append((N_Weak_Learners_with_less_Accuracy, Delta_Accuracy))
+    
+    return Processed_Results[:-1]
+
 def Perform_KFold_CV(X, y, model:AdaBoost, total_splits=5):
     # Set the K-Fold cross-validation
     kf = KFold(n_splits=total_splits, shuffle=True, random_state=123)
@@ -55,7 +83,9 @@ def Perform_KFold_CV(X, y, model:AdaBoost, total_splits=5):
     AdaBoost_Weak_Learner_Accuracies = []
     
     # Iterating through all the models and calculate their weak learner's accuracies
-    if (issubclass(AdaBoost, type(model))):
+    # if (issubclass(AdaBoost, type(model))):
+    try:
+        assert(model.__name__ == 'MyAdaBoost')
         for model in AdaBoost_Model_per_Fold:
             weak_learner_accuracy = []
             for weak_learner in model.G_M:
@@ -66,6 +96,8 @@ def Perform_KFold_CV(X, y, model:AdaBoost, total_splits=5):
 
         # Getting the Mean Accuracy of each weak learner
         AdaBoost_Weak_Learner_Accuracies = np.mean(AdaBoost_Weak_Learner_Accuracies, axis=0)
+    except:
+        pass
 
     # Return accuracies and respective standard deviations
     return AdaBoost_Scores, AdaBoost_Weak_Learner_Accuracies
@@ -114,11 +146,14 @@ def Evaluate_Models(tasks, models, columns):
             # Perform K-Fold Cross Validation
             Model_Accuracies, Weak_Learners_Accuracies = Perform_KFold_CV(X, y, model)
 
+            # Calculating the Average Accuracy
+            Average_Model_Accuracy = np.mean(Model_Accuracies)
+
             # Saving the results to a dictionary [Need to convert the numpy arrays to lists since they are not json serializable]
-            Model_Results.update({columns_names[4+idx]:{'Model_Accuracies': list(Model_Accuracies), 'Weak_Learners_Accuracies':list(Weak_Learners_Accuracies)}})
+            Model_Results.update({columns_names[4+idx]:{'Majority_Class':majority_class_cases, 'Model_Accuracy': Average_Model_Accuracy, 'Weak_Learners_Accuracies':list(Weak_Learners_Accuracies)}})
 
             # Save the Model Mean Accuracy
-            dataset_results.append(np.mean(Model_Accuracies))
+            dataset_results.append(Average_Model_Accuracy)
 
         # Updating the results for the current dataset
         Models_Results.update({int(task_id):Model_Results})
