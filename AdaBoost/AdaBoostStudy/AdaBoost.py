@@ -21,6 +21,8 @@ __version__ = "2.0.1"
 # Define AdaBoost class
 class AdaBoost(BaseEstimator, ClassifierMixin):
     def __init__(self, weak_learner=None, weak_learner_hyperparameters=None, loss_function=None, learning_rate=None):
+        self.__name__ = 'MyAdaBoost'
+        
         self.alphas = []
         self.weak_learner = DecisionTreeClassifier if weak_learner is None else weak_learner
         self.weak_learner_hyperparameters = {'max_depth':1} if weak_learner_hyperparameters is None else weak_learner_hyperparameters
@@ -120,7 +122,11 @@ class AdaBoost(BaseEstimator, ClassifierMixin):
             
             # (a) Fit weak classifier and predict labels
             G_m = self.weak_learner(**self.weak_learner_hyperparameters)  # By Default uses a Stump: Two terminal-node classification tree
-            G_m.fit(X, y, sample_weight = w_i)
+            try:
+                G_m.fit(X, y, sample_weight = w_i)
+            except:
+                G_m.fit(X, y)
+
             y_pred = G_m.predict(X)
 
             self.G_M.append(G_m) # Save to list of weak classifiers
