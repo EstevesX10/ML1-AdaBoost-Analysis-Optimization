@@ -1,6 +1,7 @@
 from sklearn.tree import (DecisionTreeClassifier)
 from sklearn.linear_model import (Perceptron)
 from .AdaBoost import (AdaBoost)
+from sklearn.neural_network import (MLPClassifier)
 
 '''
     # ---------------------- #
@@ -40,37 +41,9 @@ class AdaBoostPerceptron(AdaBoost):
     def predict_proba(self, X):
         return super().predict_proba(X)
 
-# -------------------------------------------------------
-
-class AdaBoost_LogisticLoss(AdaBoost):
+class AdaBoostMLP(AdaBoost):
     def __init__(self):
-        super().__init__(loss_function = 'logistic')
-
-    def fit(self, X, y, M = 100):
-        return super().fit(X, y, M)
-
-    def predict(self, X):
-        return super().predict(X)
-
-    def predict_proba(self, X):
-        return super().predict_proba(X)
-
-class AdaBoost_HingeLoss(AdaBoost):
-    def __init__(self):
-        super().__init__(loss_function = 'hinge')
-
-    def fit(self, X, y, M = 100):
-        return super().fit(X, y, M)
-
-    def predict(self, X):
-        return super().predict(X)
-
-    def predict_proba(self, X):
-        return super().predict_proba(X)
-
-class AdaBoost_SquaredLoss(AdaBoost):
-    def __init__(self):
-        super().__init__(loss_function = 'squared')
+        super().__init__(weak_learner=MLPClassifier, weak_learner_hyperparameters={'hidden_layer_sizes':(1,), 'early_stopping':True})
 
     def fit(self, X, y, M = 100):
         return super().fit(X, y, M)
