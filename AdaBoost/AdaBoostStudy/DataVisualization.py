@@ -5,6 +5,7 @@ import seaborn as sns
 from sklearn.metrics import (confusion_matrix, roc_curve, roc_auc_score)
 from .ModelEvaluation import (Perform_KFold_CV)
 import scikit_posthocs as sp
+import statsmodels.api as sm
 
 '''
     # ----------------------- #
@@ -37,6 +38,117 @@ This File contains multiple functions used to Visualize Data:
     -> Plot_Critial_Difference_Diagram(Matrix, Colors):
         - Plots the Critical Difference Diagram
 '''
+
+def Plot_Scatterplot(Points:list[tuple], Title:str='Insert Title', y_label:str='Insert y Label', x_label:str='Insert X Label'):
+   # Unpacking the points into x and y coordinates
+    x_values, y_values = zip(*Points)
+    
+    # Create the scatter plot
+    plt.scatter(x_values, y_values, color='#1F7799')
+    
+    # Using LOWESS to fit a smooth line through the points
+    lowess = sm.nonparametric.lowess(y_values, x_values, frac=0.35)  # Adjust frac to change the smoothness
+    lowess_x = list(zip(*lowess))[0]
+    lowess_y = list(zip(*lowess))[1]
+    
+    # Plotting the LOWESS result
+    plt.plot(lowess_x, lowess_y, '#AF1021', linestyle='--')
+    
+    # Adding titles and labels
+    plt.title(Title)
+    plt.xlabel(x_label)
+    plt.ylabel(y_label)
+    
+    # Displaying the plot
+    plt.show()
+
+def Plot_Scatterplots(Data:list[list[tuple]], Titles:list[str]=None, y_label:str=None, x_label:str=None):
+    # Getting total of graphs
+    n_plots = len(Data)
+
+    # Setting number of rows and cols
+    if (n_plots > 3):
+        n_cols = 3
+        n_rows = (n_plots // 3) + 1
+    else:
+        n_cols = n_plots % 3
+        n_rows = 1
+
+    # Setting Default Values
+    Titles = ['Insert Title' for _ in range(n_plots)] if Titles is None else Titles
+    y_label = 'Insert y Label' if y_label is None else y_label
+    x_label = 'Insert X Label' if x_label is None else x_label
+
+    # Create a figure
+    # fig, axs = plt.subplots(n_rows, n_cols, figsize=(n_rows*12, n_cols*3))
+
+    axs_used = []
+
+    if (n_rows == 1):
+        # Create a figure
+        fig, axs = plt.subplots(n_rows, n_cols, figsize=(n_rows*8, n_cols*2))
+
+        for idx, Points in enumerate(Data):
+            # Unpacking values
+            x, y = zip(*Points)
+
+            # Scatter the points
+            axs[idx].scatter(x, y, color='#1F7799')
+
+            # Using LOWESS to fit a smooth line through the points
+            lowess = sm.nonparametric.lowess(y, x, frac=0.35)  # Adjust frac to change the smoothness
+            lowess_x = list(zip(*lowess))[0]
+            lowess_y = list(zip(*lowess))[1]
+
+            # Add a few more details to the Plot
+            axs[idx].plot(lowess_x, lowess_y, '#AF1021', linestyle='--')
+            axs[idx].set_title(Titles[idx])
+            axs[idx].set_xlabel(x_label)
+            axs[idx].set_ylabel(y_label)
+
+            axs_used.append((idx, 0))
+
+        for i in range(n_rows):
+            if ((i, 0) not in axs_used):
+                axs[i, 0].axis('off')
+
+    else:
+        # Create a figure
+        fig, axs = plt.subplots(n_rows, n_cols, figsize=(n_rows*4, n_cols*n_rows))
+
+        for idx, Points in enumerate(Data):
+            # Unpacking values
+            x, y = zip(*Points)
+
+            # Scatter the points
+            axs[idx//3, idx%3].scatter(x, y, color='#1F7799')
+
+            # Using LOWESS to fit a smooth line through the points
+            lowess = sm.nonparametric.lowess(y, x, frac=0.35)  # Adjust frac to change the smoothness
+            lowess_x = list(zip(*lowess))[0]
+            lowess_y = list(zip(*lowess))[1]
+
+            # Add a few more details to the Plot
+            axs[idx//3, idx%3].plot(lowess_x, lowess_y, '#AF1021', linestyle='--')
+            axs[idx//3, idx%3].set_title(Titles[idx])
+            axs[idx//3, idx%3].set_xlabel(x_label)
+            axs[idx//3, idx%3].set_ylabel(y_label)
+
+            axs_used.append((idx//3, idx%3))
+
+        for i in range(n_rows):
+            for j in range(n_cols):
+                if ((i, j) not in axs_used):
+                    axs[i, j].axis('off')
+
+    # Adjust Layout
+    plt.tight_layout()
+
+    # Displaying the plot
+    plt.show()
+
+
+# ------------------------------------------------------
 
 def Display_Confusion_Matrix(FitModel, X_Test, y_Test, labels):
 
