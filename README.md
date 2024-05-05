@@ -8,7 +8,19 @@
 </p>
 
 ## Project Overview
-> ADD PROJECT OVERVIEW
+
+In recent years, the rise of **Artificial Intelligence** and the widespread use of **Machine Learning** have revolutionized the way we tackle complex real-world challenges. However, due to the **diverse nature of data involved**, choosing the right algorithm is crucial to achieve efficient and effective solutions. Therefore, understanding the **strengths** and **weaknesses** behind different Machine Learning algorithms, and knowing how to **adapt them** to meet specific challenges, can become a fulcral skill to develop.
+
+Furthermore, since the **choice of algorithm** greatly depends on the specific task and data involved, it's clear that there is no **"Master Algorithm"** (No algorithm can solve every problem). For example, while Linear Discriminants effectively delineate boundaries in data that is linearly separable, they struggle to capture relationships in more complex, higher-dimensional spaces.
+
+This Project focuses on the following topic:
+
+<div align="center">
+
+> With no Master Algorithm, is it possible to improve a existing Machine Learning Algorithm in characteristics it struggles the most?
+</div>
+
+Therefore, after choosing a **Machine Learning Algorithm** and gaining a thorough understanding of its theoretical and empirical aspects, we aim to **refine it**, specifically **targeting its weaknesses** in solving classification problems.
 
 ### Dependencies
 
