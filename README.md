@@ -7,7 +7,7 @@
     <!-- <img src="./Connect 4/Assets/ConnectFour_README_Wallpaper.jpg" width="60%" height="60%" /> -->
 </p>
 
-## Project Overview
+### Project Overview
 
 In recent years, the rise of **Artificial Intelligence** and the widespread use of **Machine Learning** have revolutionized the way we tackle complex real-world challenges. However, due to the **diverse nature of data involved**, choosing the right algorithm is crucial to achieve efficient and effective solutions. Therefore, understanding the **strengths** and **weaknesses** behind different Machine Learning algorithms, and knowing how to **adapt them** to meet specific challenges, can become a fulcral skill to develop.
 
