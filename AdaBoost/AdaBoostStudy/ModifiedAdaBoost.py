@@ -1,7 +1,8 @@
+import numpy as np
 from sklearn.tree import (DecisionTreeClassifier)
 from sklearn.linear_model import (Perceptron)
 from .AdaBoost import (AdaBoost)
-from sklearn.neural_network import (MLPClassifier)
+
 
 '''
     # ---------------------- #
@@ -10,46 +11,32 @@ from sklearn.neural_network import (MLPClassifier)
 
 This File contains Modified Versions of the AdaBoost Algorithm based on:
 
-    -> Weak Learner Choice
-    -> Loss Functions used in training
+    -> Weak Learner Choice [AdaBoostTunedDT, AdaBoostPerceptron]
 
 '''
 
 class AdaBoostTunedDT(AdaBoost):
-    def __init__(self, weak_learner_hyperparameters={'max_depth':1}):
+    def __init__(self, weak_learner_hyperparameters={'max_depth':1}) -> None:
         super().__init__(weak_learner=DecisionTreeClassifier, weak_learner_hyperparameters=weak_learner_hyperparameters)
 
-    def fit(self, X, y, M = 100):
+    def fit(self, X:np.ndarray, y:np.ndarray, M = 100) -> None:
         return super().fit(X, y, M)
 
-    def predict(self, X):
+    def predict(self, X:np.ndarray) -> np.ndarray:
         return super().predict(X)
 
-    def predict_proba(self, X):
+    def predict_proba(self, X:np.ndarray) -> np.ndarray:
         return super().predict_proba(X)
 
 class AdaBoostPerceptron(AdaBoost):
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__(weak_learner=Perceptron, weak_learner_hyperparameters={})
 
-    def fit(self, X, y, M = 100):
+    def fit(self, X:np.ndarray, y:np.ndarray, M = 100) -> None:
         return super().fit(X, y, M)
 
-    def predict(self, X):
+    def predict(self, X:np.ndarray) -> np.ndarray:
         return super().predict(X)
 
-    def predict_proba(self, X):
-        return super().predict_proba(X)
-
-class AdaBoostMLP(AdaBoost):
-    def __init__(self):
-        super().__init__(weak_learner=MLPClassifier, weak_learner_hyperparameters={'hidden_layer_sizes':(1,), 'early_stopping':True})
-
-    def fit(self, X, y, M = 100):
-        return super().fit(X, y, M)
-
-    def predict(self, X):
-        return super().predict(X)
-
-    def predict_proba(self, X):
+    def predict_proba(self, X:np.ndarray) -> np.ndarray:
         return super().predict_proba(X)
