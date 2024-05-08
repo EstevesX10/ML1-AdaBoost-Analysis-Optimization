@@ -1,10 +1,10 @@
 import numpy as np
 import pandas as pd
 import json
-from sklearn.model_selection import (KFold, cross_val_score, cross_validate)
-from .DataPreprocessing import (Fetch_X_y)
+from sklearn.model_selection import (KFold, cross_validate)
 from sklearn.metrics import (accuracy_score)
-from .AdaBoost import AdaBoost
+from .DataPreprocessing import (Fetch_X_y)
+from .AdaBoost import (AdaBoost)
 
 '''
     # --------------------- #
@@ -28,17 +28,17 @@ This File contains multiple functions used to Evaluate the Machine Learning Mode
 
 '''
 
-def Save_json_file(content: dict, file_path:str):
+def Save_json_file(content: dict, file_path:str) -> None:
     '''Saves a Dictionary as a json file'''
     with open(file_path, "w") as f:
         json.dump(content , f)
         
-def Load_json_file(file_path:str):
+def Load_json_file(file_path:str) -> any:
     '''Loads a json file - creates a dictionary'''
     with open(file_path) as f:
         return json.load(f)
 
-def Manage_Results(results:dict):
+def Manage_Results(results:dict) -> np.ndarray:
     '''Converts the Results saved in .json file into a list of points to futher scatterplot'''
     
     # [Results_Diff_1, Results_Diff_2, ...] => as many as the model's processed
@@ -66,7 +66,7 @@ def Manage_Results(results:dict):
     
     return Processed_Results[:-1]
 
-def Perform_KFold_CV(X, y, model:AdaBoost, total_splits=5):
+def Perform_KFold_CV(X:np.ndarray, y:np.ndarray, model:AdaBoost, total_splits:int=5) -> tuple[np.ndarray, np.ndarray]:
     # Set the K-Fold cross-validation
     kf = KFold(n_splits=total_splits, shuffle=True, random_state=123)
     
@@ -99,10 +99,10 @@ def Perform_KFold_CV(X, y, model:AdaBoost, total_splits=5):
     except:
         pass
 
-    # Return accuracies and respective standard deviations
+    # Return accuracies
     return AdaBoost_Scores, AdaBoost_Weak_Learner_Accuracies
 
-def Perform_Mean_KFold_CV(X, y, model):
+def Perform_Mean_KFold_CV(X:np.ndarray, y:np.ndarray, model:AdaBoost) -> tuple[float, np.ndarray]:
     # Get accuracies and std's 
     Accuracy, Weak_Learners_Accuracies = Perform_KFold_CV(X, y, model)
     
@@ -111,7 +111,7 @@ def Perform_Mean_KFold_CV(X, y, model):
     
     return Avg_Accuracy, Weak_Learners_Accuracies
 
-def Evaluate_Model(task_id, model):
+def Evaluate_Model(task_id:int, model:AdaBoost) -> None:
     # Get Features and Target
     ds_name, X, y = Fetch_X_y(task_id)
 
@@ -121,7 +121,7 @@ def Evaluate_Model(task_id, model):
     # Print Results
     print(f"[DATASET] {ds_name}\n[Average Accuracy] {Avg_Accuracy:1.3f}")
 
-def Evaluate_Models(tasks, models, columns):
+def Evaluate_Models(tasks:list[int], models:list[AdaBoost], columns:list[str]) -> tuple[pd.DataFrame, dict]:
     # Create List to store the obtained results 
     data = []
     Models_Results = {}
