@@ -3,9 +3,10 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.metrics import (confusion_matrix, roc_curve, roc_auc_score)
-from .ModelEvaluation import (Perform_KFold_CV)
 import scikit_posthocs as sp
 import statsmodels.api as sm
+from .AdaBoost import (AdaBoost)
+from .ModelEvaluation import (Perform_KFold_CV)
 
 '''
     # ----------------------- #
@@ -39,7 +40,7 @@ This File contains multiple functions used to Visualize Data:
         - Plots the Critical Difference Diagram
 '''
 
-def Plot_Scatterplot(Points:list[tuple], Title:str='Insert Title', y_label:str='Insert y Label', x_label:str='Insert X Label'):
+def Plot_Scatterplot(Points:list[tuple], Title:str='Insert Title', y_label:str='Insert y Label', x_label:str='Insert X Label') -> None:
    # Unpacking the points into x and y coordinates
     x_values, y_values = zip(*Points)
     
@@ -62,7 +63,7 @@ def Plot_Scatterplot(Points:list[tuple], Title:str='Insert Title', y_label:str='
     # Displaying the plot
     plt.show()
 
-def Plot_Scatterplots(Data:list[list[tuple]], Titles:list[str]=None, y_label:str=None, x_label:str=None):
+def Plot_Scatterplots(Data:list[list[tuple]], Titles:list[str]=None, y_label:str=None, x_label:str=None) -> None:
     # Getting total of graphs
     n_plots = len(Data)
 
@@ -86,7 +87,7 @@ def Plot_Scatterplots(Data:list[list[tuple]], Titles:list[str]=None, y_label:str
 
     if (n_rows == 1):
         # Create a figure
-        fig, axs = plt.subplots(n_rows, n_cols, figsize=(n_rows*8, n_cols*2))
+        fig, axs = plt.subplots(n_rows, n_cols, figsize=(n_rows*10, n_cols*2))
 
         for idx, Points in enumerate(Data):
             # Unpacking values
@@ -95,8 +96,8 @@ def Plot_Scatterplots(Data:list[list[tuple]], Titles:list[str]=None, y_label:str
             # Scatter the points
             axs[idx].scatter(x, y, color='#1F7799')
 
-            # Using LOWESS to fit a smooth line through the points
-            lowess = sm.nonparametric.lowess(y, x, frac=0.35)  # Adjust frac to change the smoothness
+            # Using LOWESS to fit a smooth line through the points [Adjust frac to change the smoothness]
+            lowess = sm.nonparametric.lowess(y, x, frac=0.35)  
             lowess_x = list(zip(*lowess))[0]
             lowess_y = list(zip(*lowess))[1]
 
@@ -150,7 +151,7 @@ def Plot_Scatterplots(Data:list[list[tuple]], Titles:list[str]=None, y_label:str
 
 # ------------------------------------------------------
 
-def Display_Confusion_Matrix(FitModel, X_Test, y_Test, labels):
+def Display_Confusion_Matrix(FitModel:AdaBoost, X_Test:np.ndarray, y_Test:np.ndarray, labels:np.ndarray) -> None:
 
     '''
     Displays the Model's Confusion Matrix.
@@ -184,7 +185,7 @@ def Display_Confusion_Matrix(FitModel, X_Test, y_Test, labels):
     # Showing Final Product
     plt.show()
 
-def Plot_ROC_Curve(FitModel, X_Test, Y_Test):
+def Plot_ROC_Curve(FitModel:AdaBoost, X_Test:np.ndarray, Y_Test:np.ndarray) -> None:
 
     '''
     Plots the Model's ROC Curve:
@@ -226,7 +227,7 @@ def Plot_ROC_Curve(FitModel, X_Test, Y_Test):
     plt.legend(loc=4)
     plt.show()
 
-def Plot_Weak_Learners_Stats(FitModel):
+def Plot_Weak_Learners_Stats(FitModel:AdaBoost) -> None:
 
     '''
     Plots The Weak Learner's Training Error and Weights over N Boosting Rounds
@@ -256,7 +257,7 @@ def Plot_Weak_Learners_Stats(FitModel):
     fig.suptitle("AdaBoostClassifier [Performance Analysis]")
     fig.tight_layout()
 
-def Plot_Model_Stats(FitModel, X_Test, Y_Test, Title="Model Performance Evaluation"):
+def Plot_Model_Stats(FitModel:AdaBoost, X_Test:np.ndarray, Y_Test:np.ndarray, Title:str="Model Performance Evaluation") -> None:
 
     '''
     Plots The Model's weak learner's Training Error and Weights over N Boosting Rounds as well as the ROC Curve and the Confusion Matrix
@@ -287,13 +288,13 @@ def Plot_Model_Stats(FitModel, X_Test, Y_Test, Title="Model Performance Evaluati
 
     # Plot training errors and weights
     weak_learners_info['Errors'].plot(ax=axs[0], title="Weak learner's training error", color="tab:blue")
-    axs[0].set_xlabel("Number of Weak Learners")
+    axs[0].set_xlabel("# Weak Learners")
     axs[0].set_ylabel("Train error")
     axs[0].hlines(0.5, 1, len(FitModel.alphas), colors='#bd162c', linestyles='dashed', label='Random Guessing (0.5)')
     axs[0].legend()
 
     weak_learners_info['Weights'].plot(ax=axs[1], title="Weak learner's weight", color="tab:blue")
-    axs[1].set_xlabel("Number of Weak Learners")
+    axs[1].set_xlabel("# Weak Learners")
     axs[1].set_ylabel("Weight")
     axs[1].legend()
 
@@ -324,7 +325,7 @@ def Plot_Model_Stats(FitModel, X_Test, Y_Test, Title="Model Performance Evaluati
     plt.tight_layout()
     plt.show()
 
-def Compare_Models_Stats(FitModels, ModelsNames, X_test, y_test):
+def Compare_Models_Stats(FitModels:list[AdaBoost], ModelsNames:list[str], X_test:np.ndarray, y_test:np.ndarray) -> None:
 
     '''
     Plots The Model's weak learner's Training Error and Weights over N Boosting Rounds 
@@ -357,14 +358,14 @@ def Compare_Models_Stats(FitModels, ModelsNames, X_test, y_test):
     
         # Plot training errors
         weak_learners_info['Errors'].plot(ax=axes[idx, 0], title=f"{ModelsNames[idx]} Training Errors", color="tab:blue")
-        axes[idx, 0].set_xlabel("Number of Weak Learners")
+        axes[idx, 0].set_xlabel("# Weak Learners")
         axes[idx, 0].set_ylabel("Training Error")
         axes[idx, 0].hlines(0.5, 1, len(model.alphas), colors='#bd162c', linestyles='dashed', label='Random Guessing (0.5)')
         axes[idx, 0].legend()
     
         # Plot weights
         weak_learners_info['Weights'].plot(ax=axes[idx, 1], title=f"{ModelsNames[idx]} Weights", color="tab:blue")
-        axes[idx, 1].set_xlabel("Number of Weak Learners")
+        axes[idx, 1].set_xlabel("# Weak Learners")
         axes[idx, 1].set_ylabel("Weights")
         axes[idx, 1].legend()
     
@@ -397,7 +398,7 @@ def Compare_Models_Stats(FitModels, ModelsNames, X_test, y_test):
     plt.tight_layout()
     plt.show()
 
-def Compare_Models_Accuracies(X, y, Models, ModelsNames, Colors):
+def Compare_Models_Accuracies(X:np.ndarray, y:np.ndarray, Models:list[AdaBoost], ModelsNames:list[str], Colors:dict) -> None:
 
     '''
     Plots how the Accuracies of the provided Models evolve during K-Fold Cross Validation.
@@ -435,7 +436,7 @@ def Compare_Models_Accuracies(X, y, Models, ModelsNames, Colors):
     plt.grid(True)
     plt.show()
 
-def Model_Accuracies_Per_Dataset(results, model_name):
+def Model_Accuracies_Per_Dataset(results:pd.DataFrame, model_name:str) -> None:
 
     '''
     Plots a Barplot with the Model's Accuracies per Dataset previously calculated - Inside Results
@@ -462,7 +463,7 @@ def Model_Accuracies_Per_Dataset(results, model_name):
     plt.tight_layout()
     plt.show()
 
-def Plot_Critial_Difference_Diagram(Matrix, Colors):
+def Plot_Critial_Difference_Diagram(Matrix:np.ndarray, Colors:dict) -> None:
 
     '''
     Plots the Critical Difference Diagram.
@@ -475,7 +476,6 @@ def Plot_Critial_Difference_Diagram(Matrix, Colors):
     
     # Perform Nemenyi post-hoc test
     nemenyi = sp.posthoc_nemenyi_friedman(Matrix)
-    # print(nemenyi)
 
     # Add Some Styling
     marker = {'marker':'o', 'linewidth':1}
