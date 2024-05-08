@@ -16,7 +16,7 @@ This File contains multiple functions used to Process Data:
         - Gets the arrays of Features and Targets from a dataset belonging to a given task
 '''
 
-def Fetch_Dataset(task_id):
+def Fetch_Dataset(task_id:int) -> tuple[str, pd.DataFrame]:
     '''Fetches a Dataset given a OpenML Task ID'''
     # Get OpenML task
     task = openml.tasks.get_task(task_id)
@@ -38,7 +38,7 @@ def Fetch_Dataset(task_id):
     
     return dataset.name, df
 
-def Fetch_X_y(task_id):
+def Fetch_X_y(task_id:int) -> tuple[str, np.ndarray, np.ndarray]:
     '''Fetches a Dataset given a OpenML Task ID'''
     # Get OpenML task
     task = openml.tasks.get_task(task_id)
