@@ -20,7 +20,7 @@ __version__ = "2.0.1"
 
 # Define AdaBoost class
 class AdaBoost(BaseEstimator, ClassifierMixin):
-    def __init__(self, weak_learner=None, weak_learner_hyperparameters=None, loss_function=None, learning_rate=None) -> None:
+    def __init__(self, weak_learner:any=None, weak_learner_hyperparameters:dict=None, loss_function:str=None, learning_rate:float=None) -> None:
         self.__name__ = 'MyAdaBoost'
         
         self.alphas = []
