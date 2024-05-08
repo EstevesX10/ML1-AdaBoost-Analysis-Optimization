@@ -13,14 +13,14 @@ as well as some functions to compute values along the training and testing of th
 
 '''
 
-def sigmoid(x):
+def sigmoid(x:float) -> float:
     return 1 / (1 + np.exp(-x))
 
 __version__ = "2.0.1"
 
 # Define AdaBoost class
 class AdaBoost(BaseEstimator, ClassifierMixin):
-    def __init__(self, weak_learner=None, weak_learner_hyperparameters=None, loss_function=None, learning_rate=None):
+    def __init__(self, weak_learner=None, weak_learner_hyperparameters=None, loss_function=None, learning_rate=None) -> None:
         self.__name__ = 'MyAdaBoost'
         
         self.alphas = []
@@ -35,7 +35,7 @@ class AdaBoost(BaseEstimator, ClassifierMixin):
         self.training_errors = []
         self.prediction_errors = []
 
-    def compute_error(self, y_true, y_pred, w_i):
+    def compute_error(self, y_true:np.ndarray, y_pred:np.ndarray, w_i:np.ndarray) -> float:
         '''
         Calculate the error rate of a weak classifier m. Arguments:
         y: actual target value
@@ -47,7 +47,7 @@ class AdaBoost(BaseEstimator, ClassifierMixin):
         # Assuming y_true is in {-1, 1}
         return np.sum(w_i * (y_pred != y_true))
 
-    def compute_alpha(self, error):
+    def compute_alpha(self, error:float) -> float:
         '''
         Calculate the weight of a weak classifier m in the majority vote of the final classifier. This is called
         alpha in chapter 10.1 of The Elements of Statistical Learning. Arguments:
@@ -65,7 +65,7 @@ class AdaBoost(BaseEstimator, ClassifierMixin):
         else:
             raise ValueError("Unsupported Loss Function!")
 
-    def update_weights(self, w_i, alpha, y_true, y_pred):
+    def update_weights(self, w_i:np.ndarray, alpha:float, y_true:np.ndarray, y_pred:np.ndarray) -> np.ndarray:
         ''' 
         Update individual weights w_i after a boosting iteration. Arguments:
         w_i: individual weights for each observation
@@ -97,7 +97,7 @@ class AdaBoost(BaseEstimator, ClassifierMixin):
         # Normalize weights
         return w_i / np.sum(w_i)
 
-    def fit(self, X, y, M = 100):
+    def fit(self, X:np.ndarray, y:np.ndarray, M:int = 100) -> None:
         '''
         Fit model. Arguments:
         X: independent variables - array-like matrix
@@ -142,7 +142,7 @@ class AdaBoost(BaseEstimator, ClassifierMixin):
         assert len(self.G_M) == len(self.alphas)
         self.classes_ = np.unique(y_pred)
 
-    def predict(self, X):
+    def predict(self, X:np.ndarray) -> np.ndarray:
         '''
         Predict using fitted model. Arguments:
         X: independent variables - array-like
@@ -163,7 +163,7 @@ class AdaBoost(BaseEstimator, ClassifierMixin):
 
         return y_pred
 
-    def predict_proba(self, X):
+    def predict_proba(self, X:np.ndarray) -> np.ndarray:
         '''
         Predict class probabilities using the fitted model.
         X: independent variables - array-like matrix
