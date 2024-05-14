@@ -30,6 +30,9 @@ This File contains multiple functions used to Visualize Data:
     -> Plot_Model_Stats(FitModel, X_Test, Y_Test):
         - Plots The Model's weak learner's Training Error and Weights over N Boosting Rounds as well as the ROC Curve and the Confusion Matrix
 
+    -> Plot_Average_Model_Stats(average_results:dict, model_name:str, Title:str="Model Performance Evaluation"):
+        - Plots the Average Performance of a given model
+
     -> Compare_Models_Stats(FitModels, ModelsNames, X_test, y_test):
         - Plots Statiscal Data (Error in Training, Weights and ROC Curve) for a list of given Trained Models - Allow for parallel comparison
 
@@ -147,9 +150,6 @@ def Plot_Scatterplots(Data:list[list[tuple]], Titles:list[str]=None, y_label:str
 
     # Displaying the plot
     plt.show()
-
-
-# ------------------------------------------------------
 
 def Display_Confusion_Matrix(FitModel:AdaBoost, X_Test:np.ndarray, y_Test:np.ndarray, labels:np.ndarray) -> None:
 
@@ -325,11 +325,7 @@ def Plot_Model_Stats(FitModel:AdaBoost, X_Test:np.ndarray, Y_Test:np.ndarray, Ti
     plt.tight_layout()
     plt.show()
 
-def Plot_Average_Model_Stats(average_results, model_name, Title:str="Model Performance Evaluation") -> None:
-
-    # Todos os modelos treinados
-    # Cada um dos test sets
-
+def Plot_Average_Model_Stats(average_results:dict, model_name:str, Title:str="Model Performance Evaluation") -> None:
     '''
     Plots The Average Model's weak learner's Training Error and Weights over N Boosting Rounds as well as the ROC Curve
     FitModel := Trained AdaBoost Classifier 
@@ -337,7 +333,6 @@ def Plot_Average_Model_Stats(average_results, model_name, Title:str="Model Perfo
     Y_Test := Array with the Label's Test set
     '''
 
-    
     # Calculating the Mean Values
     false_positive_rate = average_results[model_name]['fpr']
     true_positive_rate = average_results[model_name]['tpr']
