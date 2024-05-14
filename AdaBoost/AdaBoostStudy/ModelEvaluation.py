@@ -2,6 +2,8 @@ import numpy as np
 import pandas as pd
 import json
 from sklearn.model_selection import (KFold, cross_validate)
+from sklearn.model_selection import (train_test_split)
+from sklearn.metrics import (roc_curve, roc_auc_score)
 from sklearn.metrics import (accuracy_score)
 from .DataPreprocessing import (Fetch_X_y)
 from .AdaBoost import (AdaBoost)
@@ -22,9 +24,18 @@ This File contains multiple functions used to Evaluate the Machine Learning Mode
     -> Evaluate_Model(task_id, model):
         - Calculates the accuracy and standard deviation a given model obtains against a given task
     
+    -> def round_numeric(x:float):
+        - Formats floats to 2 decimal points (%)
+
     -> def Evaluate_Models(tasks, models, columns):
         - Calculates the accuracy and standard deviation every model given obtains against all the selected datasets from the 'OpenML-CC18' Study
-        and stores the results inside a DataFrame 
+        and stores the results inside a DataFrame
+    
+    -> def Evaluate_Average_Results(df:pd.DataFrame, columns:list[str]):
+        - Calculates the average accuracy results for each model
+    
+    -> Calculate_Average_Models_Stats(my_tasks:list[int], models:list[any]):
+        - Calculates the average parameters for each model's behaviour
 
 '''
 
@@ -85,7 +96,7 @@ def Perform_KFold_CV(X:np.ndarray, y:np.ndarray, model:AdaBoost, total_splits:in
     # Iterating through all the models and calculate their weak learner's accuracies
     # if (issubclass(AdaBoost, type(model))):
     try:
-        assert(model.__name__ == 'MyAdaBoost')
+        assert(model.__name__ in ['AdaBoost [Base]', 'AdaBoost [Max Depth 3]', 'AdaBoost [Perceptron]'])
         for model in AdaBoost_Model_per_Fold:
             weak_learner_accuracy = []
             for weak_learner in model.G_M:
@@ -116,12 +127,12 @@ def Evaluate_Model(task_id:int, model:AdaBoost) -> None:
     ds_name, X, y = Fetch_X_y(task_id)
 
     # Perform K-Fold Cross Validation
-    Avg_Accuracy, Weak_Learners_Accuracies = Perform_Mean_KFold_CV(X, y, model)
+    Avg_Accuracy, Weak_Learners_Accuracies, Best_Model = Perform_Mean_KFold_CV(X, y, model)
 
     # Print Results
     print(f"[DATASET] {ds_name}\n[Average Accuracy] {Avg_Accuracy:1.3f}")
 
-def round_numeric(x):
+def round_numeric(x:float) -> float:
     # Function to round numeric values to 2 decimal places
     return round(x*100, 2) if isinstance(x, (int, float)) else x
 
@@ -184,3 +195,61 @@ def Evaluate_Average_Results(df:pd.DataFrame, columns:list[str]) -> pd.DataFrame
     final_df = pd.DataFrame([data], columns=columns)
 
     return final_df
+
+def Calculate_Average_Models_Stats(my_tasks:list[int], models:list[any]) -> dict:
+    # Dictionary to Store the Values
+    results = {}
+
+    for my_model in models:
+        # Defining arrays to store the information
+        false_positive_rates = []
+        true_positive_rates = []
+        AUCs = []
+        model_train_errors = []
+        model_alphas = []
+
+        # Defining a linear space to deal with fpr list sizes (due to having multiple datasets with multiple features)
+        mean_fpr = np.linspace(0, 1, 100)
+
+        for task_id in my_tasks:
+            # Get Features and Target
+            ds_name, X, y = Fetch_X_y(task_id)
+            (X_train, X_test, y_train, y_test) = train_test_split(X, y, test_size=0.3, stratify=y)
+            
+            # Creating a new instance of the Model
+            model = my_model()
+            try:
+                model = model.load_model(f"./Experimental Results/Trained Models/{ds_name}_{model.__name__}.jobllib")
+            except:
+                model.fit(X_train, y_train)
+                model.save_model(f"./Experimental Results/Trained Models/{ds_name}_{model.__name__}.jobllib")
+
+            # Calculating the values for the ROC Curve
+            y_pred_proba = model.predict_proba(X_test)[:,1]
+            model_false_positive_rate, model_true_positive_rate, _ = roc_curve(y_test, y_pred_proba)
+            tpr_interpolated = np.interp(mean_fpr, model_false_positive_rate, model_true_positive_rate)
+            tpr_interpolated[0] = 0.0
+            false_positive_rates.append(mean_fpr)
+            true_positive_rates.append(tpr_interpolated)
+            model_AUC = roc_auc_score(y_test, y_pred_proba)
+            AUCs.append(model_AUC)
+
+            # Getting the weak learners info
+            model_train_errors.append(model.training_errors)
+            model_alphas.append(model.alphas)
+        
+        # Calculating the Mean Values
+        false_positive_rate = np.mean(false_positive_rates, axis=0)
+        true_positive_rate = np.mean(true_positive_rates, axis=0)
+        AUC = np.mean(AUCs)
+        train_errors = np.mean(model_train_errors, axis=0)
+        alphas = np.mean(model_alphas, axis=0)
+        
+        # Updating Results
+        results.update({model.__name__:{'fpr':list(false_positive_rate),
+                                        'tpr':list(true_positive_rate),
+                                        'AUC':float(AUC),
+                                        'train_errors':list(train_errors),
+                                        'alphas':list(alphas)}})
+
+    return results
