@@ -22,7 +22,7 @@ __version__ = "2.0.1"
 # Define AdaBoost class
 class AdaBoost(BaseEstimator, ClassifierMixin):
     def __init__(self, weak_learner:any=None, weak_learner_hyperparameters:dict=None, loss_function:str=None, learning_rate:float=None) -> None:
-        self.__name__ = 'MyAdaBoost'
+        self.__name__ = 'AdaBoost [Base]'
         
         self.alphas = []
         self.weak_learner = DecisionTreeClassifier if weak_learner is None else weak_learner
