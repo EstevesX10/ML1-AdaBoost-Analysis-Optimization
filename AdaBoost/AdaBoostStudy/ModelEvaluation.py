@@ -121,6 +121,10 @@ def Evaluate_Model(task_id:int, model:AdaBoost) -> None:
     # Print Results
     print(f"[DATASET] {ds_name}\n[Average Accuracy] {Avg_Accuracy:1.3f}")
 
+def round_numeric(x):
+    # Function to round numeric values to 2 decimal places
+    return round(x*100, 2) if isinstance(x, (int, float)) else x
+
 def Evaluate_Models(tasks:list[int], models:list[AdaBoost], columns:list[str]) -> tuple[pd.DataFrame, dict]:
     # Create List to store the obtained results 
     data = []
@@ -163,5 +167,6 @@ def Evaluate_Models(tasks:list[int], models:list[AdaBoost], columns:list[str]) -
         
     # Create a DataFrame
     df = pd.DataFrame(data, columns=columns_names)
+    df = df.applymap(round_numeric)
 
     return df, Models_Results
