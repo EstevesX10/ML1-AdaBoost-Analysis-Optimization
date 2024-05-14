@@ -325,6 +325,63 @@ def Plot_Model_Stats(FitModel:AdaBoost, X_Test:np.ndarray, Y_Test:np.ndarray, Ti
     plt.tight_layout()
     plt.show()
 
+def Plot_Average_Model_Stats(average_results, model_name, Title:str="Model Performance Evaluation") -> None:
+
+    # Todos os modelos treinados
+    # Cada um dos test sets
+
+    '''
+    Plots The Average Model's weak learner's Training Error and Weights over N Boosting Rounds as well as the ROC Curve
+    FitModel := Trained AdaBoost Classifier 
+    X_Test := Array with the Feature's Test set  
+    Y_Test := Array with the Label's Test set
+    '''
+
+    
+    # Calculating the Mean Values
+    false_positive_rate = average_results[model_name]['fpr']
+    true_positive_rate = average_results[model_name]['tpr']
+    AUC = average_results[model_name]['AUC']
+    train_errors = average_results[model_name]['train_errors']
+    alphas = average_results[model_name]['alphas']
+
+    # Prepare DataFrame for the weak learners' statistics
+    weak_learners_info = pd.DataFrame({
+            "Errors": train_errors,
+            "Weights": alphas,
+        },
+        index=range(1, len(alphas) + 1)
+    )
+
+    # Create a larger figure to accommodate the plots
+    fig, axs = plt.subplots(nrows=1, ncols=3, figsize=(12, 4))
+
+    # Plot training errors and weights
+    weak_learners_info['Errors'].plot(ax=axs[0], title="Weak learner's training error", color="tab:blue")
+    axs[0].set_xlabel("# Weak Learners")
+    axs[0].set_ylabel("Train error")
+    axs[0].hlines(0.5, 1, len(alphas), colors='#bd162c', linestyles='dashed', label='Random Guessing (0.5)')
+    axs[0].legend()
+
+    weak_learners_info['Weights'].plot(ax=axs[1], title="Weak learner's weight", color="tab:blue")
+    axs[1].set_xlabel("# Weak Learners")
+    axs[1].set_ylabel("Weight")
+    axs[1].legend()
+
+    # Plot ROC Curve
+    axs[2].plot(false_positive_rate, true_positive_rate, label=f"AUC = {round(AUC, 4)}", color="darkblue", linestyle='-', linewidth=1.4)
+    axs[2].plot([0, 1], [0, 1], label="Chance level (AUC = 0.5)", color="darkred", linestyle='--')
+    axs[2].set_title('ROC Curve')
+    axs[2].set_xlabel('False Positive Rate')
+    axs[2].set_ylabel('True Positive Rate')
+    axs[2].legend()
+
+    # Set the super title for all subplots
+    fig.suptitle(Title)
+
+    plt.tight_layout()
+    plt.show()
+
 def Compare_Models_Stats(FitModels:list[AdaBoost], ModelsNames:list[str], X_test:np.ndarray, y_test:np.ndarray) -> None:
 
     '''
