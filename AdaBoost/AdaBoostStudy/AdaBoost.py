@@ -193,7 +193,7 @@ class AdaBoost(BaseEstimator, ClassifierMixin):
             dump(self, f)
 
     @staticmethod
-    def load_model(file_path: str):
+    def load_model(file_path: str) -> any:
         '''
         Load a trained model from a file.
         file_path := string with the path to the trained model

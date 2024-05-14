@@ -27,6 +27,12 @@ class AdaBoostTunedDT(AdaBoost):
 
     def predict_proba(self, X:np.ndarray) -> np.ndarray:
         return super().predict_proba(X)
+    
+    def save_model(self, file_path:str) -> None:
+        return super().save_model(file_path)
+    
+    def load_model(self, file_path:str) -> any:
+        return super().load_model(file_path)
 
 class AdaBoostPerceptron(AdaBoost):
     def __init__(self) -> None:
@@ -40,3 +46,9 @@ class AdaBoostPerceptron(AdaBoost):
 
     def predict_proba(self, X:np.ndarray) -> np.ndarray:
         return super().predict_proba(X)
+    
+    def save_model(self, file_path:str) -> None:
+        return super().save_model(file_path)
+    
+    def load_model(self, file_path:str) -> any:
+        return super().load_model(file_path)
