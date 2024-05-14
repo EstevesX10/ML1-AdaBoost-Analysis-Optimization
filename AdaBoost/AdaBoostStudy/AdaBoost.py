@@ -2,6 +2,7 @@ import numpy as np
 import pandas as pd
 from sklearn.base import (BaseEstimator, ClassifierMixin)
 from sklearn.tree import (DecisionTreeClassifier)
+from joblib import (dump, load)
 
 '''
     # ------------------ #
@@ -26,6 +27,7 @@ class AdaBoost(BaseEstimator, ClassifierMixin):
         self.alphas = []
         self.weak_learner = DecisionTreeClassifier if weak_learner is None else weak_learner
         self.weak_learner_hyperparameters = {'max_depth':1} if weak_learner_hyperparameters is None else weak_learner_hyperparameters
+        
         self.loss_function = 'exponential' if loss_function is None else loss_function
         self.learning_rate = 0.01 if learning_rate is None else learning_rate
         
@@ -97,7 +99,7 @@ class AdaBoost(BaseEstimator, ClassifierMixin):
         # Normalize weights
         return w_i / np.sum(w_i)
 
-    def fit(self, X:np.ndarray, y:np.ndarray, M:int = 100) -> None:
+    def fit(self, X:np.ndarray, y:np.ndarray, M:int=100) -> None:
         '''
         Fit model. Arguments:
         X: independent variables - array-like matrix
@@ -111,7 +113,7 @@ class AdaBoost(BaseEstimator, ClassifierMixin):
         self.M = M
 
         # Iterate over M weak classifiers
-        for m in range(M):
+        for m in range(self.M):
             
             # Set weights for current boosting iteration
             if m == 0:
@@ -181,3 +183,21 @@ class AdaBoost(BaseEstimator, ClassifierMixin):
         
         # Since the class labels are in {-1, 1}
         return np.vstack([(1 - proba), proba]).T
+    
+    def save_model(self, file_path: str) -> None:
+        '''
+        Save the trained model to a file.
+        file_path := string
+        '''
+        with open(file_path, 'wb') as f:
+            dump(self, f)
+
+    @staticmethod
+    def load_model(file_path: str):
+        '''
+        Load a trained model from a file.
+        file_path := string with the path to the trained model
+        '''
+        with open(file_path, 'rb') as f:
+            model = load(f)
+        return model
