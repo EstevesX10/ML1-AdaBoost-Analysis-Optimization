@@ -18,6 +18,7 @@ This File contains Modified Versions of the AdaBoost Algorithm based on:
 class AdaBoostTunedDT(AdaBoost):
     def __init__(self, weak_learner_hyperparameters={'max_depth':1}) -> None:
         super().__init__(weak_learner=DecisionTreeClassifier, weak_learner_hyperparameters=weak_learner_hyperparameters)
+        self.__name__ = 'AdaBoost [Max Depth 3]'
 
     def fit(self, X:np.ndarray, y:np.ndarray, M = 100) -> None:
         return super().fit(X, y, M)
@@ -37,6 +38,7 @@ class AdaBoostTunedDT(AdaBoost):
 class AdaBoostPerceptron(AdaBoost):
     def __init__(self) -> None:
         super().__init__(weak_learner=Perceptron, weak_learner_hyperparameters={})
+        self.__name__ = 'AdaBoost [Perceptron]'
 
     def fit(self, X:np.ndarray, y:np.ndarray, M = 100) -> None:
         return super().fit(X, y, M)
