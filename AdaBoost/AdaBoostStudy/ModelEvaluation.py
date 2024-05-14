@@ -170,3 +170,17 @@ def Evaluate_Models(tasks:list[int], models:list[AdaBoost], columns:list[str]) -
     df = df.applymap(round_numeric)
 
     return df, Models_Results
+
+def Evaluate_Average_Results(df:pd.DataFrame, columns:list[str]) -> pd.DataFrame:
+    # Calculates the average results of each modified model into a new dataframe
+    unnecessary_columns = ['Dataset', 'Positive Class (%)', 'Negative Class (%)', 'Majority Class (%)']
+    clean_df = df.drop(columns=unnecessary_columns)
+    data = []
+    for _, col in enumerate(clean_df.columns):
+        column_values = clean_df[col].to_numpy()
+        data.append(np.mean(column_values))
+
+    # Creating a Final Dataframe
+    final_df = pd.DataFrame([data], columns=columns)
+
+    return final_df
