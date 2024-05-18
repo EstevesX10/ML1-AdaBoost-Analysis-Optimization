@@ -4,7 +4,7 @@
 </div>
 
 <p align="center" width="100%">
-    <!-- <img src="./Connect 4/Assets/ConnectFour_README_Wallpaper.jpg" width="60%" height="60%" /> -->
+    <img src="./AdaBoost/Assets/Boosting.gif" width="60%" height="60%" />
 </p>
 
 ### Project Overview
