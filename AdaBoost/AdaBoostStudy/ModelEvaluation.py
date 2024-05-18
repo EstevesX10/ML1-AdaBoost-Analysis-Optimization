@@ -182,6 +182,10 @@ def Evaluate_Models(tasks:list[int], models:list[AdaBoost], columns:list[str]) -
 
     return df, Models_Results
 
+def format_numeric(x:float) -> float:
+    # Function to format float values into 2 decimal places
+    return round(x, 2) if isinstance(x, (int, float)) else x
+
 def Evaluate_Average_Results(df:pd.DataFrame, columns:list[str]) -> pd.DataFrame:
     # Calculates the average results of each modified model into a new dataframe
     unnecessary_columns = ['Dataset', 'Positive Class (%)', 'Negative Class (%)', 'Majority Class (%)']
@@ -193,7 +197,7 @@ def Evaluate_Average_Results(df:pd.DataFrame, columns:list[str]) -> pd.DataFrame
 
     # Creating a Final Dataframe
     final_df = pd.DataFrame([data], columns=columns)
-
+    final_df = final_df.applymap(format_numeric)
     return final_df
 
 def Calculate_Average_Models_Stats(my_tasks:list[int], models:list[any]) -> dict:
