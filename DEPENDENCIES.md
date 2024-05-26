@@ -1,3 +1,8 @@
+<div align="center">
+
+## Project Dependencies & Execution
+</div>
+
 ### Dependencies
 
 In order to install the necessary **libraries** to execute this `Project` you can either execute the following command in your `environment's terminal`:
