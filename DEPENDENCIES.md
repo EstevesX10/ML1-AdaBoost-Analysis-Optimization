@@ -1,9 +1,9 @@
 <div align="center">
 
-## Project Dependencies & Execution
+# Project Dependencies & Execution
 </div>
 
-### Dependencies
+## Dependencies
 
 In order to install the necessary **libraries** to execute this `Project` you can either execute the following command in your `environment's terminal`:
 
@@ -17,7 +17,7 @@ Another approach would be to `Create a New Anaconda Environment` with all the de
 
     conda env create -f ML1.yml
 
-### Execution
+## Execution
 Since the Project was developed using a `Jupyter Notebook` you will need to type the following **command** in order to inspect it:
 
     jupyter notebook 
