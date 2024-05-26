@@ -1,8 +1,6 @@
 <div align="center">
 
-### Machine Learning I
-### AdaBoost Classifier Analysis & Optimization
-
+### ML1 | AdaBoost Classifier Analysis & Optimization
 </div>
 
 <br>
