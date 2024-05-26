@@ -1,7 +1,8 @@
 <div align="center">
+<p>
 
 ## ML1 | AdaBoost Classifier Analysis & Optimization
-<br/>
+</p>
 </div>
 
 <br>
