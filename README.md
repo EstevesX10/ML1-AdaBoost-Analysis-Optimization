@@ -22,4 +22,6 @@ This Project focuses on the following topic:
 
 Therefore, after choosing a **Machine Learning Algorithm** and gaining a thorough understanding of its theoretical and empirical aspects, we aim to **refine it**, specifically **targeting its weaknesses** in solving classification problems.
 
+<div align="right">
 <sub><sup>README.md by Gonçalo Esteves</sup></sub>
+</div>
