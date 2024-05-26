@@ -2,7 +2,7 @@
 <p>
 
 ## ML1 | AdaBoost Classifier Analysis & Optimization
-</p>
+</p></s>
 </div>
 
 <br>
