@@ -1,11 +1,9 @@
-<div align="center">
 <p>
+<div align="center">
 
 ## ML1 | AdaBoost Classifier Analysis & Optimization
-</p></s>
 </div>
-
-<br>
+</p>
 
 <p align="center" width="100%">
     <img src="./AdaBoost/Assets/Boosting.gif" width="60%" height="60%" />
