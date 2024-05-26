@@ -3,9 +3,15 @@
 ## ML1 | AdaBoost Classifier Analysis & Optimization
 </div>
 
+<br>
+
 <p align="center" width="100%">
     <img src="./AdaBoost/Assets/Boosting.gif" width="60%" height="60%" />
 </p>
+
+<br>
+
+<!-- ADD BUTTONS HERE -->
 
 ### Project Overview
 
@@ -25,3 +31,13 @@ Therefore, after choosing a **Machine Learning Algorithm** and gaining a thoroug
 <div align="right">
 <sub><sup>README.md by Gonçalo Esteves</sup></sub>
 </div>
+
+<!---------------------------------------------------------------------------->
+
+[License]: LICENSE
+[#]: #
+
+<!---------------------------------[ Badges ]---------------------------------->
+
+[Badge License]: https://img.shields.io/badge/-BY_SA_4.0-ae6c18.svg?style=for-the-badge&labelColor=EF9421&logoColor=white&logo=CreativeCommons
+[Badge Likes]: https://img.shields.io/github/stars/MarkedDown/Buttons?style=for-the-badge&labelColor=d0ab23&color=b0901e&logoColor=white&logo=Trustpilot
