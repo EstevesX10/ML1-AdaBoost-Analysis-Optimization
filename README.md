@@ -1,6 +1,8 @@
 <div align="center">
 
-## ML1 | AdaBoost Classifier Analysis & Optimization
+## Machine Learning I
+AdaBoost Classifier Analysis & Optimization
+-
 </div>
 
 <br>
@@ -8,8 +10,6 @@
 <p align="center" width="100%">
     <img src="./AdaBoost/Assets/Boosting.gif" width="60%" height="60%" />
 </p>
-
-<br>
 
 <!-- ADD BUTTONS HERE -->
 
