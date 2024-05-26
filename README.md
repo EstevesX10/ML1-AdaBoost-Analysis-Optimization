@@ -1,6 +1,6 @@
 <div align="center">
 
-## Machine Learning I
+### Machine Learning I
 AdaBoost Classifier Analysis & Optimization
 -
 </div>
