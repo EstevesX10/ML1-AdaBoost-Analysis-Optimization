@@ -9,7 +9,28 @@
     <img src="./AdaBoost/Assets/Boosting.gif" width="60%" height="60%" />
 </p>
 
-<!-- ADD BUTTONS HERE -->
+<div align="center">
+    <a>
+        <img src="https://img.shields.io/badge/Made%20with-Jupyter-white?style=for-the-badge&logo=Jupyter&logoColor=white">
+    </a>
+</div>
+
+<br/>
+
+<div align="center">
+    <a href="https://github.com/EstevesX10/ML1-AdaBoost-Analysis-Optimization/blob/main/LICENSE">
+        <img src="https://img.shields.io/github/license/EstevesX10/ML1-AdaBoost-Analysis-Optimization?style=flat&logo=gitbook&logoColor=white&label=License&color=white">
+    </a>
+    <a href="">
+        <img src="https://img.shields.io/github/repo-size/EstevesX10/ML1-AdaBoost-Analysis-Optimization?style=flat&logo=googlecloudstorage&logoColor=white&logoSize=auto&label=Repository%20Size&color=white">
+    </a>
+    <a href="">
+        <img src="https://img.shields.io/github/stars/EstevesX10/ML1-AdaBoost-Analysis-Optimization?style=flat&logo=adafruit&logoColor=white&logoSize=auto&label=Stars&color=white">
+    </a>
+    <a href="https://github.com/EstevesX10/ML1-AdaBoost-Analysis-Optimization/blob/main/DEPENDENCIES.md">
+        <img src="https://img.shields.io/badge/Dependencies-DEPENDENCIES.md-white?style=flat&logo=anaconda&logoColor=white&logoSize=auto&color=white"> 
+    </a>
+</div>
 
 ## Project Overview
 
