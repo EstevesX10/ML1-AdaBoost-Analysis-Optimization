@@ -57,18 +57,14 @@ Nowadays, since **singular Machine Learning Algorithms** can fall short to predi
 
 Consequently, after careful consideration, we decided to focus on enhancing the **AdaBoost Algorithm M1**, which is employed in **binary classification problems**.
 
-<p align="right" width="100%">
+<!-- <p align="right" width="100%">
     <img src="./AdaBoost/Assets/AdaBoost_Overview.jpeg" width="55%" height="55%" />
-</p>
-<!-- 
--           |  -
-:-------------------------:|:-------------------------:
-Hello World  |      <img src="./AdaBoost/Assets/AdaBoost_Overview.jpeg" width="55%" height="55%" /> -->
+</p> -->
 
 <table style="width:100%;">
   <tr>
     <td style="width:45%;">Hello World</td>
-    <td style="width:55%;"><img src="./AdaBoost/Assets/AdaBoost_Overview.jpeg" style="width:100%; height:auto;" /></td>
+    <td style="width:55%;"><img src="./AdaBoost/Assets/AdaBoost_Overview.jpeg" style="width:55%; height:auto;" /></td>
   </tr>
 </table>
 
