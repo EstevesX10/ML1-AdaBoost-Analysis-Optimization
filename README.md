@@ -53,6 +53,10 @@ Nowadays, since **singular Machine Learning Algorithms** can fall short to predi
 
 Consequently, after careful consideration, we decided to focus on enhancing the **AdaBoost Algorithm M1**, which is employed in **binary classification problems**.
 
+<p align="center" width="100%">
+    <img src="./AdaBoost/Assets/Boosting.png" width="30%" height="30%" />
+</p>
+
 **AdaBoost** (Adaptive Boosting) is a type of ensemble learning technique used in machine learning to solve both **classification** and **regression** problems. It consists on training a series of weak classifiers on the dataset. Therefore, with each iteration, the algorithm **increases the focus** on data points that were **previously predicted incorrectly**.
 
 As a result, the AdaBoost algorithm builds a model by considering all the individual **weak classifiers** which are **weighted based on their performance**. Consequently, classifiers with **higher predictive accuracy contribute more to the final decision** which **reduces the influence of less accurate ones** in the final prediction. 
