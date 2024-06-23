@@ -61,12 +61,12 @@ Consequently, after careful consideration, we decided to focus on enhancing the 
     <img src="./AdaBoost/Assets/AdaBoost_Overview.jpeg" width="55%" height="55%" />
 </p> -->
 
-<table style="width:100%;">
+<table width="100%">
   <tr>
-    <td style="width:45%;">
+    <td width="45%">
     **AdaBoost** (Adaptive Boosting) is a type of ensemble learning technique used in machine learning to solve both **classification** and **regression** problems. It consists on training a series of weak classifiers on the dataset. Therefore, with each iteration, the algorithm **increases the focus** on data points that were **previously predicted incorrectly**.
     </td>
-    <td style="width:55%;">
+    <td width="55%">
         <p align="center"><img src="./AdaBoost/Assets/AdaBoost_Overview.jpeg" width="70%" height="auto"/>
         </p>
     </td>
