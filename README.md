@@ -64,7 +64,7 @@ Consequently, after careful consideration, we decided to focus on enhancing the 
 <table style="width:100%;">
   <tr>
     <td style="width:45%;">Hello World</td>
-    <td style="width:55%;"><img src="./AdaBoost/Assets/AdaBoost_Overview.jpeg" style="width:55%; height:auto;" /></td>
+    <td style="width:55%;"><p align="center"><img src="./AdaBoost/Assets/AdaBoost_Overview.jpeg" style="width:auto; height:auto;" /></p></td>
   </tr>
 </table>
 
