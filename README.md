@@ -73,10 +73,6 @@ Consequently, after careful consideration, we decided to focus on enhancing the 
 
 As a result, the AdaBoost algorithm builds a model by considering all the individual **weak classifiers** which are **weighted based on their performance**. Consequently, classifiers with **higher predictive accuracy contribute more to the final decision** which **reduces the influence of less accurate ones** in the final prediction. 
 
-<!-- <p align="center" width="100%">
-    <img src="./AdaBoost/Assets/" width="55%" height="55%" />
-</p> -->
-
 ## Authorship
 
 - **Authors** &#8594; [Gonçalo Esteves](https://github.com/EstevesX10) and [Nuno Gomes](https://github.com/NightF0x26)
@@ -85,7 +81,6 @@ As a result, the AdaBoost algorithm builds a model by considering all the indivi
 
 <div align="right">
 <sub>
-
 <!-- <sup></sup> -->
 
 `README.md by Gonçalo Esteves`
