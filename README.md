@@ -1,7 +1,7 @@
 <p>
 <div align="center">
 
-## ML1 | AdaBoost Classifier Analysis & Optimization
+# ML1 | AdaBoost Classifier Analysis & Optimization
 </div>
 </p>
 
@@ -73,14 +73,14 @@ Consequently, after careful consideration, we decided to focus on enhancing the 
 
 As a result, the AdaBoost algorithm builds a model by considering all the individual **weak classifiers** which are **weighted based on their performance**. Consequently, classifiers with **higher predictive accuracy contribute more to the final decision** which **reduces the influence of less accurate ones** in the final prediction. 
 
-<p align="center" width="100%">
+<!-- <p align="center" width="100%">
     <img src="./AdaBoost/Assets/" width="55%" height="55%" />
-</p>
+</p> -->
 
 ## Authorship
 
 - **Authors** &#8594; [Gonçalo Esteves](https://github.com/EstevesX10) and [Nuno Gomes](https://github.com/NightF0x26)
-- **Course** &#8594; Machine Learning I [[CC2008](https://sigarra.up.pt/fcup/en/ucurr_geral.ficha_uc_view?pv_ocorrencia_id=529874)]
+- **Course** &#8594; Machine Learning I [CC2008]
 - **University** &#8594; Faculty of Sciences, University of Porto
 
 <div align="right">
