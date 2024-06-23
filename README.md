@@ -57,14 +57,10 @@ Nowadays, since **singular Machine Learning Algorithms** can fall short to predi
 
 Consequently, after careful consideration, we decided to focus on enhancing the **AdaBoost Algorithm M1**, which is employed in **binary classification problems**.
 
-<!-- <p align="right" width="100%">
-    <img src="./AdaBoost/Assets/AdaBoost_Overview.jpeg" width="55%" height="55%" />
-</p> -->
-
 <table width="100%">
   <tr>
     <td width="45%">
-    **AdaBoost** (Adaptive Boosting) is a type of ensemble learning technique used in machine learning to solve both **classification** and **regression** problems. It consists on training a series of weak classifiers on the dataset. Therefore, with each iteration, the algorithm **increases the focus** on data points that were **previously predicted incorrectly**.
+    <b>AdaBoost</b> (Adaptive Boosting) is a type of ensemble learning technique used in machine learning to solve both <b>classification</b> and <b>regression</b> problems. It consists on training a <b>series of weak classifiers</b> on the dataset. Therefore, with each iteration, the algorithm <b>increases the focus</b> on data points that were <b>previously predicted incorrectly</b>.
     </td>
     <td width="55%">
         <p align="center"><img src="./AdaBoost/Assets/AdaBoost_Overview.jpeg" width="100%" height="auto"/>
@@ -72,8 +68,6 @@ Consequently, after careful consideration, we decided to focus on enhancing the 
     </td>
   </tr>
 </table>
-
-**AdaBoost** (Adaptive Boosting) is a type of ensemble learning technique used in machine learning to solve both **classification** and **regression** problems. It consists on training a series of weak classifiers on the dataset. Therefore, with each iteration, the algorithm **increases the focus** on data points that were **previously predicted incorrectly**.
 
 As a result, the AdaBoost algorithm builds a model by considering all the individual **weak classifiers** which are **weighted based on their performance**. Consequently, classifiers with **higher predictive accuracy contribute more to the final decision** which **reduces the influence of less accurate ones** in the final prediction. 
 
