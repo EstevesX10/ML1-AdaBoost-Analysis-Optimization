@@ -73,6 +73,16 @@ Consequently, after careful consideration, we decided to focus on enhancing the 
   </tr>
 </table>
 
+<div style="display: flex; align-items: center;">
+  <div style="flex: 1;">
+    Hello World
+  </div>
+  <div style="flex: 1;">
+    <img src="./AdaBoost/Assets/AdaBoost_Overview.jpeg" style="width: 100%; height: auto;" />
+  </div>
+</div>
+
+
 
 **AdaBoost** (Adaptive Boosting) is a type of ensemble learning technique used in machine learning to solve both **classification** and **regression** problems. It consists on training a series of weak classifiers on the dataset. Therefore, with each iteration, the algorithm **increases the focus** on data points that were **previously predicted incorrectly**.
 
