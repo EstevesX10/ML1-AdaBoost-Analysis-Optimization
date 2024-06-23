@@ -47,6 +47,22 @@ This Project focuses on the following topic:
 
 Therefore, after choosing a **Machine Learning Algorithm** and gaining a thorough understanding of its theoretical and empirical aspects, we aim to **refine it**, specifically **targeting its weaknesses** in solving classification problems.
 
+## Classifier Selection
+
+Nowadays, since **singular Machine Learning Algorithms** can fall short to predict the whole data given, we decided to study an **Ensemble Algorithm**. Since these Algorithms can combine outputs of multiple models it makes them more prone to **better address more complex problems** and **provide better solutions**.
+
+Consequently, after careful consideration, we decided to focus on enhancing the **AdaBoost Algorithm M1**, which is employed in **binary classification problems**.
+
+**AdaBoost** (Adaptive Boosting) is a type of ensemble learning technique used in machine learning to solve both **classification** and **regression** problems. It consists on training a series of weak classifiers on the dataset. Therefore, with each iteration, the algorithm **increases the focus** on data points that were **previously predicted incorrectly**.
+
+As a result, the AdaBoost algorithm builds a model by considering all the individual **weak classifiers** which are **weighted based on their performance**. Consequently, classifiers with **higher predictive accuracy contribute more to the final decision** which **reduces the influence of less accurate ones** in the final prediction. 
+
+## Authorship
+
+- **Authors** &#8594; [Gonçalo Esteves](https://github.com/EstevesX10) and [Nuno Gomes](https://github.com/NightF0x26)
+- **Course** &#8594; Machine Learning I [[CC2008](https://sigarra.up.pt/fcup/en/ucurr_geral.ficha_uc_view?pv_ocorrencia_id=529874)]
+- **University** &#8594; Faculty of Sciences, University of Porto
+
 <div align="right">
 <sub>
 
@@ -55,13 +71,3 @@ Therefore, after choosing a **Machine Learning Algorithm** and gaining a thoroug
 `README.md by Gonçalo Esteves`
 </sub>
 </div>
-
-<!---------------------------------------------------------------------------->
-
-[License]: LICENSE
-[#]: #
-
-<!---------------------------------[ Badges ]---------------------------------->
-
-[Badge License]: https://img.shields.io/badge/-BY_SA_4.0-ae6c18.svg?style=for-the-badge&labelColor=EF9421&logoColor=white&logo=CreativeCommons
-[Badge Likes]: https://img.shields.io/github/stars/MarkedDown/Buttons?style=for-the-badge&labelColor=d0ab23&color=b0901e&logoColor=white&logo=Trustpilot
