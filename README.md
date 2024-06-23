@@ -63,11 +63,15 @@ Consequently, after careful consideration, we decided to focus on enhancing the 
 
 <table style="width:100%;">
   <tr>
-    <td style="width:45%;">Hello World</td>
-    <td style="width:55%;"><p align="center"><img src="./AdaBoost/Assets/AdaBoost_Overview.jpeg" style="width:auto; height:auto;" /></p></td>
+    <td style="width:45%;">
+    **AdaBoost** (Adaptive Boosting) is a type of ensemble learning technique used in machine learning to solve both **classification** and **regression** problems. It consists on training a series of weak classifiers on the dataset. Therefore, with each iteration, the algorithm **increases the focus** on data points that were **previously predicted incorrectly**.
+    </td>
+    <td style="width:55%;">
+        <p align="center"><img src="./AdaBoost/Assets/AdaBoost_Overview.jpeg" style="width:70%; height:auto;" />
+        </p>
+    </td>
   </tr>
 </table>
-
 
 
 **AdaBoost** (Adaptive Boosting) is a type of ensemble learning technique used in machine learning to solve both **classification** and **regression** problems. It consists on training a series of weak classifiers on the dataset. Therefore, with each iteration, the algorithm **increases the focus** on data points that were **previously predicted incorrectly**.
@@ -75,7 +79,7 @@ Consequently, after careful consideration, we decided to focus on enhancing the 
 As a result, the AdaBoost algorithm builds a model by considering all the individual **weak classifiers** which are **weighted based on their performance**. Consequently, classifiers with **higher predictive accuracy contribute more to the final decision** which **reduces the influence of less accurate ones** in the final prediction. 
 
 <p align="center" width="100%">
-    <img src="./AdaBoost/Assets/AdaBoost_Overview.jpeg" width="55%" height="55%" />
+    <img src="./AdaBoost/Assets/" width="55%" height="55%" />
 </p>
 
 ## Authorship
