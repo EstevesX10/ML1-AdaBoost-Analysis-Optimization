@@ -47,6 +47,10 @@ This Project focuses on the following topic:
 
 Therefore, after choosing a **Machine Learning Algorithm** and gaining a thorough understanding of its theoretical and empirical aspects, we aim to **refine it**, specifically **targeting its weaknesses** in solving classification problems.
 
+<p align="center" width="100%">
+    <img src="./AdaBoost/Assets/Robot.jpeg" width="45%" height="45%" />
+</p>
+
 ## Classifier Selection
 
 Nowadays, since **singular Machine Learning Algorithms** can fall short to predict the whole data given, we decided to study an **Ensemble Algorithm**. Since these Algorithms can combine outputs of multiple models it makes them more prone to **better address more complex problems** and **provide better solutions**.
@@ -54,7 +58,7 @@ Nowadays, since **singular Machine Learning Algorithms** can fall short to predi
 Consequently, after careful consideration, we decided to focus on enhancing the **AdaBoost Algorithm M1**, which is employed in **binary classification problems**.
 
 <p align="center" width="100%">
-    <img src="./AdaBoost/Assets/Boosting.png" width="30%" height="30%" />
+    <img src="./AdaBoost/Assets/" width="30%" height="30%" />
 </p>
 
 **AdaBoost** (Adaptive Boosting) is a type of ensemble learning technique used in machine learning to solve both **classification** and **regression** problems. It consists on training a series of weak classifiers on the dataset. Therefore, with each iteration, the algorithm **increases the focus** on data points that were **previously predicted incorrectly**.
