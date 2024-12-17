@@ -515,7 +515,7 @@ def Model_Accuracies_Per_Dataset(results:pd.DataFrame, model_name:str) -> None:
     plt.tight_layout()
     plt.show()
 
-def Plot_Critial_Difference_Diagram(Matrix:np.ndarray, Colors:dict) -> None:
+def Plot_Critial_Difference_Diagram(Matrix:pd.DataFrame, Colors:dict) -> None:
 
     '''
     Plots the Critical Difference Diagram.
