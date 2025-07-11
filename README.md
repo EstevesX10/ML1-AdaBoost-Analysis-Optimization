@@ -6,7 +6,7 @@
 </p>
 
 <p align="center" width="100%">
-    <img src="./AdaBoost/Assets/Boosting.gif" width="60%" height="60%" />
+    <img src="./AdaBoost/Assets/Boosting.gif" width="40%" />
 </p>
 
 <div align="center">
@@ -48,7 +48,7 @@ This Project focuses on the following topic:
 Therefore, after choosing a **Machine Learning Algorithm** and gaining a thorough understanding of its theoretical and empirical aspects, we aim to **refine it**, specifically **targeting its weaknesses** in solving classification problems.
 
 <p align="center" width="100%">
-    <img src="./AdaBoost/Assets/ThoughtProcess.png" width="45%" height="45%" />
+    <img src="./AdaBoost/Assets/ThoughtProcess.png" width="45%" />
 </p>
 
 ## Classifier Selection
